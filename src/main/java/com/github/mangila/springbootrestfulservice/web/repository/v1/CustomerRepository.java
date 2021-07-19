@@ -4,9 +4,7 @@ import com.github.mangila.springbootrestfulservice.db.CustomerDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface CustomerRepository extends MongoRepository<CustomerDocument,String> {
+public interface CustomerRepository extends MongoRepository<CustomerDocument, String> {
     CustomerDocument findByName(String name);
 }
