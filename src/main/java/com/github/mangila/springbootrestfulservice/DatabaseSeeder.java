@@ -32,7 +32,11 @@ public class DatabaseSeeder implements InitializingBean {
                 .forEach(name -> {
                     var c = new CustomerDocument();
                     c.setName(name);
-                    c.setRegistration(LocalDate.now());
+                    c.setRegistration(LocalDate.of(
+                            ThreadLocalRandom.current().nextInt(2010, 2020),
+                            ThreadLocalRandom.current().nextInt(1, 12),
+                            ThreadLocalRandom.current().nextInt(1, 28)
+                    ));
                     c.setOrderHistory(new ArrayList<>());
                     customerRepository.insert(c);
                     for (int i = 0; i < ThreadLocalRandom.current().nextInt(5, 10); i++) {
