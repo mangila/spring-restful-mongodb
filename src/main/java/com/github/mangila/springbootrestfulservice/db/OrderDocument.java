@@ -15,5 +15,5 @@ public class OrderDocument {
     @Id
     private String id;
     private List<String> products;
-    private Double amount;
+    private Integer amount;
 }
