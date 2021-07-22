@@ -1,5 +1,6 @@
 package com.github.mangila.springbootrestfulservice;
 
+import com.github.mangila.springbootrestfulservice.db.Address;
 import com.github.mangila.springbootrestfulservice.db.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.db.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
@@ -43,6 +44,7 @@ public class DatabaseSeeder implements InitializingBean {
                         var o = new OrderDocument();
                         o.setAmount(ThreadLocalRandom.current().nextInt(200, 800));
                         o.setProducts(this.getRandomProducts());
+                        o.setAddress(new Address("Asgard road" + ThreadLocalRandom.current().nextInt(1, 100), "Asgard"));
                         var orderId = orderRepository.insert(o).getId();
                         c = customerRepository.findByName(name);
                         c.getOrderHistory().add(orderId);
