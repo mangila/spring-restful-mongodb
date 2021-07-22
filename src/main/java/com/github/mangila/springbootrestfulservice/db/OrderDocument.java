@@ -16,4 +16,5 @@ public class OrderDocument {
     private String id;
     private List<String> products;
     private Integer amount;
+    private Address address;
 }
