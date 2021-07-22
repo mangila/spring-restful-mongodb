@@ -1,11 +1,11 @@
-package com.github.mangila.springbootrestfulservice.web.model.v1;
+package com.github.mangila.springbootrestfulservice.web.model.v1.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrderDto {
+public class CustomerDto {
 
     private String id;
 }
