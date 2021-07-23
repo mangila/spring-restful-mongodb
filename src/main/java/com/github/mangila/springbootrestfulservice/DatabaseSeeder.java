@@ -47,7 +47,9 @@ public class DatabaseSeeder implements InitializingBean {
                         var o = new OrderDocument();
                         o.setAmount(ThreadLocalRandom.current().nextInt(200, 800));
                         o.setProducts(this.getRandomProducts());
-                        o.setAddress(new Address("Asgard road " + ThreadLocalRandom.current().nextInt(1, 100), "Asgard"));
+                        o.setAddress(new Address(
+                                "Asgard road " + ThreadLocalRandom.current().nextInt(1, 100),
+                                "Asgard"));
                         var orderId = orderRepository.insert(o).getId();
                         c = customerRepository.findByName(name);
                         c.getOrderHistory().add(orderId);
