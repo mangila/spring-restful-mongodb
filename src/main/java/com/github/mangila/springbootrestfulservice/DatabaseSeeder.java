@@ -16,6 +16,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 @Component
+/**
+ * DEVELOPMENT PURPOSE CLASS
+ */
 public class DatabaseSeeder implements InitializingBean {
 
     private final CustomerRepository customerRepository;
