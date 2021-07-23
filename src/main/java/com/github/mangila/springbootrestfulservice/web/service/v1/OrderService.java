@@ -8,7 +8,6 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,10 +25,7 @@ public class OrderService {
     }
 
     public List<OrderDto> findAll() {
-        val l = new ArrayList<OrderDto>();
-        this.repository.findAll()
-                .forEach(c -> l.add(this.mapper.toDto(c)));
-        return l;
+        return this.mapper.toDto(this.repository.findAll());
     }
 
     public OrderDto findById(String id) {

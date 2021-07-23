@@ -26,10 +26,7 @@ public class CustomerService {
     }
 
     public List<CustomerDto> findAll() {
-        val l = new ArrayList<CustomerDto>();
-        this.repository.findAll()
-                .forEach(c -> l.add(this.mapper.toDto(c)));
-        return l;
+        return this.mapper.toDto(this.repository.findAll());
     }
 
     public CustomerDocument findByName(String name) {
