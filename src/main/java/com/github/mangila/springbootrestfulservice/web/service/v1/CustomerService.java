@@ -2,6 +2,7 @@ package com.github.mangila.springbootrestfulservice.web.service.v1;
 
 
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.CustomerMapper;
 import com.github.mangila.springbootrestfulservice.web.model.v1.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
@@ -36,7 +37,7 @@ public class CustomerService {
     }
 
     public CustomerDto findById(String id) {
-        val c = this.repository.findById(id).orElseThrow(RuntimeException::new);
+        val c = this.repository.findById(id).orElseThrow(ResourceNotFoundException::new);
         return this.mapper.toDto(c);
     }
 
