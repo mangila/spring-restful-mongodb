@@ -1,6 +1,6 @@
 package com.github.mangila.springbootrestfulservice.web.repository.v1;
 
-import com.github.mangila.springbootrestfulservice.db.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

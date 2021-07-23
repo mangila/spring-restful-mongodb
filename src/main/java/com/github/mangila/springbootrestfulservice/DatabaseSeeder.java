@@ -1,8 +1,8 @@
 package com.github.mangila.springbootrestfulservice;
 
-import com.github.mangila.springbootrestfulservice.db.Address;
-import com.github.mangila.springbootrestfulservice.db.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.db.OrderDocument;
+import com.github.mangila.springbootrestfulservice.domain.Address;
+import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
 import org.springframework.beans.factory.InitializingBean;
