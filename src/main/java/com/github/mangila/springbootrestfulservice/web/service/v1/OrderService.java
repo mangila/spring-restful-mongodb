@@ -39,7 +39,7 @@ public class OrderService {
         val orderId = this.repository.insert(o).getId();
         val c = this.customerService.findById(customerId);
         c.getOrderHistory().add(orderId);
-        this.customerService.updateCustomer(c);
+        this.customerService.updateCustomer(customerId, c);
         return orderId;
     }
 
