@@ -10,7 +10,6 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,16 +42,19 @@ public class CustomerService {
         return this.repository.insert(c).getId();
     }
 
-    public boolean existsById(String id) {
-        return this.repository.existsById(id);
-    }
-
     public void deleteById(String id) {
-        this.repository.deleteById(id);
+        if (this.repository.existsById(id)) {
+            this.repository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException();
+        }
     }
 
-    public void updateCustomer(CustomerDto customerDto) {
-        val c = this.mapper.toDocument(customerDto);
-        this.repository.save(c);
+    public String updateCustomer(String id, CustomerDto customerDto) {
+        if (this.repository.existsById(id)) {
+            return this.repository.save(this.mapper.toDocument(customerDto)).getId();
+        } else {
+            return this.insertNewCustomer(customerDto);
+        }
     }
 }

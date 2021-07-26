@@ -1,5 +1,6 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
+import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.model.v1.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
 import lombok.val;
@@ -34,9 +35,10 @@ public class CustomerResource {
 
     @GetMapping("{id}")
     public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
-        if (this.service.existsById(id)) {
-            return ResponseEntity.ok(this.service.findById(id));
-        } else {
+        try {
+            var c = this.service.findById(id);
+            return ResponseEntity.ok(c);
+        } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
         }
     }
@@ -54,26 +56,19 @@ public class CustomerResource {
     public ResponseEntity<?> updateCustomer(@PathVariable String id,
                                             @Valid @RequestBody CustomerDto customerDto,
                                             HttpServletRequest request) {
+        val customerId = this.service.updateCustomer(id, customerDto);
         var headers = new HttpHeaders();
-        if (this.service.existsById(id)) {
-            this.service.updateCustomer(customerDto);
-            headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(id).toString());
-            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
-        } else {
-            val newId = this.service.insertNewCustomer(customerDto);
-            headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(newId).toString());
-            return new ResponseEntity<>(headers, HttpStatus.CREATED);
-        }
+        headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(customerId).toString());
+        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
-        if (this.service.existsById(id)) {
+        try {
             this.service.deleteById(id);
             return ResponseEntity.noContent().build();
-        } else {
+        } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
         }
     }
-
 }
