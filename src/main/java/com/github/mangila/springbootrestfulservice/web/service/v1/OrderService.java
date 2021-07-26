@@ -1,6 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.service.v1;
 
 
+import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.OrderMapper;
 import com.github.mangila.springbootrestfulservice.web.model.v1.dto.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
@@ -29,7 +30,7 @@ public class OrderService {
     }
 
     public OrderDto findById(String id) {
-        val c = this.repository.findById(id).orElseThrow(RuntimeException::new);
+        val c = this.repository.findById(id).orElseThrow(ResourceNotFoundException::new);
         return this.mapper.toDto(c);
     }
 
@@ -42,11 +43,11 @@ public class OrderService {
         return orderId;
     }
 
-    public boolean existsById(String id) {
-        return this.repository.existsById(id);
-    }
-
     public void deleteById(String id) {
-        this.repository.deleteById(id);
+        if (this.repository.existsById(id)) {
+            this.repository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException();
+        }
     }
 }

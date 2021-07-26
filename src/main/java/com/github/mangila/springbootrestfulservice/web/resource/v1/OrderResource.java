@@ -33,9 +33,10 @@ public class OrderResource {
 
     @GetMapping("{id}")
     public ResponseEntity<OrderDto> findById(@PathVariable String id) {
-        if (this.service.existsById(id)) {
-            return ResponseEntity.ok(this.service.findById(id));
-        } else {
+        try {
+            val o = this.service.findById(id);
+            return ResponseEntity.ok(o);
+        } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
         }
     }
@@ -56,10 +57,10 @@ public class OrderResource {
 
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
-        if (this.service.existsById(id)) {
+        try {
             this.service.deleteById(id);
             return ResponseEntity.noContent().build();
-        } else {
+        } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
         }
     }
