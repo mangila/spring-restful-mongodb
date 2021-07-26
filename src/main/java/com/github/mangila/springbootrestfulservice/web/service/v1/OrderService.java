@@ -43,7 +43,7 @@ public class OrderService {
         return orderId;
     }
 
-    public void deleteById(String id) {
+    public void deleteById(String id) throws ResourceNotFoundException {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
         } else {
