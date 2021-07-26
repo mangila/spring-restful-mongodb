@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
-@Validated
 @RequestMapping("v1/customer")
 @RestController
 public class CustomerResource {
