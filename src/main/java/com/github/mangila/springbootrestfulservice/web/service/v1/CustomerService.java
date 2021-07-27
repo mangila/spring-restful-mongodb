@@ -37,7 +37,7 @@ public class CustomerService {
         return this.mapper.toDto(c);
     }
 
-    public String insertNewCustomer(CustomerDto customerDto) {
+    public String insert(CustomerDto customerDto) {
         val c = this.mapper.toDocument(customerDto);
         return this.repository.insert(c).getId();
     }
@@ -50,11 +50,11 @@ public class CustomerService {
         }
     }
 
-    public String updateCustomer(String id, CustomerDto customerDto) {
+    public String update(String id, CustomerDto customerDto) {
         if (this.repository.existsById(id)) {
             return this.repository.save(this.mapper.toDocument(customerDto)).getId();
         } else {
-            return this.insertNewCustomer(customerDto);
+            return this.insert(customerDto);
         }
     }
 }

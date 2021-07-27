@@ -34,12 +34,12 @@ public class OrderService {
         return this.mapper.toDto(c);
     }
 
-    public String insertNewOrder(String customerId, OrderDto orderDto) {
+    public String insert(String customerId, OrderDto orderDto) {
         val o = this.mapper.toDocument(orderDto);
         val orderId = this.repository.insert(o).getId();
         val c = this.customerService.findById(customerId);
         c.getOrderHistory().add(orderId);
-        this.customerService.updateCustomer(customerId, c);
+        this.customerService.update(customerId, c);
         return orderId;
     }
 

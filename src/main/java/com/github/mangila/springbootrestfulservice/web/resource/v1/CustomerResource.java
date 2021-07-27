@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -45,7 +44,7 @@ public class CustomerResource {
     @PostMapping
     public ResponseEntity<?> insertNewCustomer(@Valid @RequestBody CustomerDto customerDto,
                                                HttpServletRequest request) {
-        val id = this.service.insertNewCustomer(customerDto);
+        val id = this.service.insert(customerDto);
         var headers = new HttpHeaders();
         headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(id).toString());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
@@ -55,7 +54,7 @@ public class CustomerResource {
     public ResponseEntity<?> updateCustomer(@PathVariable String id,
                                             @Valid @RequestBody CustomerDto customerDto,
                                             HttpServletRequest request) {
-        val customerId = this.service.updateCustomer(id, customerDto);
+        val customerId = this.service.update(id, customerDto);
         var headers = new HttpHeaders();
         headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(customerId).toString());
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);

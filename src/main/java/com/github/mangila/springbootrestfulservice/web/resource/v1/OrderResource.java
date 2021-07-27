@@ -1,11 +1,9 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
 import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
-import com.github.mangila.springbootrestfulservice.web.model.v1.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.model.v1.dto.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
 import lombok.val;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +44,7 @@ public class OrderResource {
                                             @Valid @RequestBody OrderDto orderDto,
                                             HttpServletRequest request) {
         try {
-            val orderId = this.service.insertNewOrder(customerId, orderDto);
+            val orderId = this.service.insert(customerId, orderDto);
             val headers = new HttpHeaders();
             headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(orderId).toString());
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
