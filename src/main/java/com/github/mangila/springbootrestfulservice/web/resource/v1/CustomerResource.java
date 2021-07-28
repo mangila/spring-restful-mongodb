@@ -35,10 +35,6 @@ public class CustomerResource {
     public ResponseEntity<CustomerDto> findById(@PathVariable String id, HttpServletRequest request) {
         try {
             var c = this.service.findById(id);
-            var d = URI.create(request.getRequestURL().toString()).resolve(c.getId());
-            System.out.println(request.getRequestURI());
-            System.out.println(d.toString());
-
             return ResponseEntity.ok(c);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
