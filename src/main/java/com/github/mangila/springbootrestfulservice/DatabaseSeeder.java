@@ -5,8 +5,10 @@ import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,9 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 @Component
-/**
- * DEVELOPMENT PURPOSE CLASS
- */
+@Profile("dev")
+@Slf4j
 public class DatabaseSeeder implements InitializingBean {
 
     private final CustomerRepository customerRepository;
@@ -56,6 +57,7 @@ public class DatabaseSeeder implements InitializingBean {
                         customerRepository.save(c);
                     }
                 });
+        log.info("Database seeded with dev data.");
     }
 
     public List<String> getRandomProducts() {
