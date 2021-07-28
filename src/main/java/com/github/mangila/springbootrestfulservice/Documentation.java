@@ -25,7 +25,9 @@ public class Documentation {
                         .termsOfService("http://swagger.io/terms/")
                         .contact(new Contact()
                                 .name("Mangila"))
-                        .license(new License().name("MIT").url("https://github.com/mangila/spring-boot-restful-service/blob/master/LICENSE")));
+                        .license(new License()
+                                .name("MIT")
+                                .url("https://github.com/mangila/spring-boot-restful-service/blob/master/LICENSE")));
     }
 
 }
