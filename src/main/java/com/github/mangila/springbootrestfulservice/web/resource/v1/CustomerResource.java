@@ -32,7 +32,7 @@ public class CustomerResource {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CustomerDto> findById(@PathVariable String id, HttpServletRequest request) {
+    public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
         try {
             var c = this.service.findById(id);
             return ResponseEntity.ok(c);
