@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
 import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
-import com.github.mangila.springbootrestfulservice.web.model.v1.dto.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
 import lombok.val;
 import org.springframework.http.HttpStatus;

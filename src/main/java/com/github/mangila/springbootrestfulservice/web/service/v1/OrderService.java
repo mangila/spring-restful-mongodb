@@ -3,7 +3,7 @@ package com.github.mangila.springbootrestfulservice.web.service.v1;
 
 import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.OrderMapper;
-import com.github.mangila.springbootrestfulservice.web.model.v1.dto.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

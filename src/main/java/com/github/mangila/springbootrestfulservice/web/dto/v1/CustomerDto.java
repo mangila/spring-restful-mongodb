@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice.web.model.v1.dto;
+package com.github.mangila.springbootrestfulservice.web.dto.v1;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
