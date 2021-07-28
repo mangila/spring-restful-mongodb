@@ -42,17 +42,17 @@ public class CustomerResource {
     }
 
     @PostMapping
-    public ResponseEntity<?> insertNewCustomer(@Valid @RequestBody CustomerDto customerDto,
-                                               HttpServletRequest request) {
+    public ResponseEntity<?> create(@Valid @RequestBody CustomerDto customerDto,
+                                    HttpServletRequest request) {
         val id = this.service.insert(customerDto);
         val location = URI.create(request.getRequestURL().toString()).resolve(id);
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable String id,
-                                            @Valid @RequestBody CustomerDto customerDto,
-                                            HttpServletRequest request) {
+    public ResponseEntity<?> update(@PathVariable String id,
+                                    @Valid @RequestBody CustomerDto customerDto,
+                                    HttpServletRequest request) {
         val customerId = this.service.update(id, customerDto);
         val location = URI.create(request.getRequestURL().toString()).resolve(customerId);
         return ResponseEntity.created(location).build();

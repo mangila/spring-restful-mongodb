@@ -40,9 +40,9 @@ public class OrderResource {
     }
 
     @PostMapping("{customerId}")
-    public ResponseEntity<?> insertNewOrder(@PathVariable String customerId,
-                                            @Valid @RequestBody OrderDto orderDto,
-                                            HttpServletRequest request) {
+    public ResponseEntity<?> create(@PathVariable String customerId,
+                                    @Valid @RequestBody OrderDto orderDto,
+                                    HttpServletRequest request) {
         try {
             val orderId = this.service.insert(customerId, orderDto);
             val location = URI.create(request.getRequestURL().toString()).resolve(orderId);
