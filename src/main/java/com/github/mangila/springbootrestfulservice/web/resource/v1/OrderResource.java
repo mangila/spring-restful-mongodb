@@ -4,7 +4,6 @@ import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoun
 import com.github.mangila.springbootrestfulservice.web.model.v1.dto.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
 import lombok.val;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +45,8 @@ public class OrderResource {
                                             HttpServletRequest request) {
         try {
             val orderId = this.service.insert(customerId, orderDto);
-            val headers = new HttpHeaders();
             val location = URI.create(request.getRequestURL().toString()).resolve(orderId);
-            headers.add(HttpHeaders.LOCATION, location.toString());
-            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+            return ResponseEntity.created(location).build();
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", customerId));
         }

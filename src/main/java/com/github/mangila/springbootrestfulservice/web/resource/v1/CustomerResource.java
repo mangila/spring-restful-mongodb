@@ -5,7 +5,6 @@ import com.github.mangila.springbootrestfulservice.web.model.v1.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,10 +49,8 @@ public class CustomerResource {
     public ResponseEntity<?> insertNewCustomer(@Valid @RequestBody CustomerDto customerDto,
                                                HttpServletRequest request) {
         val id = this.service.insert(customerDto);
-        var headers = new HttpHeaders();
         val location = URI.create(request.getRequestURL().toString()).resolve(id);
-        headers.add(HttpHeaders.LOCATION, location.toString());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("{id}")
@@ -61,10 +58,8 @@ public class CustomerResource {
                                             @Valid @RequestBody CustomerDto customerDto,
                                             HttpServletRequest request) {
         val customerId = this.service.update(id, customerDto);
-        var headers = new HttpHeaders();
         val location = URI.create(request.getRequestURL().toString()).resolve(customerId);
-        headers.add(HttpHeaders.LOCATION, location.toString());
-        return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("{id}")
