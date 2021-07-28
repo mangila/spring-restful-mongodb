@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RequestMapping("v1/order")
@@ -46,7 +47,8 @@ public class OrderResource {
         try {
             val orderId = this.service.insert(customerId, orderDto);
             val headers = new HttpHeaders();
-            headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(orderId).toString());
+            val location = URI.create(request.getRequestURL().toString()).resolve(orderId);
+            headers.add(HttpHeaders.LOCATION, location.toString());
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", customerId));

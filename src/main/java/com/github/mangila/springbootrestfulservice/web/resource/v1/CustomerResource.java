@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RequestMapping("v1/customer")
@@ -32,9 +33,13 @@ public class CustomerResource {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
+    public ResponseEntity<CustomerDto> findById(@PathVariable String id, HttpServletRequest request) {
         try {
             var c = this.service.findById(id);
+            var d = URI.create(request.getRequestURL().toString()).resolve(c.getId());
+            System.out.println(request.getRequestURI());
+            System.out.println(d.toString());
+
             return ResponseEntity.ok(c);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
@@ -46,7 +51,8 @@ public class CustomerResource {
                                                HttpServletRequest request) {
         val id = this.service.insert(customerDto);
         var headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(id).toString());
+        val location = URI.create(request.getRequestURL().toString()).resolve(id);
+        headers.add(HttpHeaders.LOCATION, location.toString());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
@@ -56,7 +62,8 @@ public class CustomerResource {
                                             HttpServletRequest request) {
         val customerId = this.service.update(id, customerDto);
         var headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION, request.getRequestURL().append("/").append(customerId).toString());
+        val location = URI.create(request.getRequestURL().toString()).resolve(customerId);
+        headers.add(HttpHeaders.LOCATION, location.toString());
         return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
     }
 
