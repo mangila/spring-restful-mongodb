@@ -32,7 +32,7 @@ public class OrderResource {
     @GetMapping("{id}")
     public ResponseEntity<OrderDto> findById(@PathVariable String id) {
         try {
-            val o = this.service.findById(id);
+            final OrderDto o = this.service.findById(id);
             return ResponseEntity.ok(o);
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
@@ -44,8 +44,8 @@ public class OrderResource {
                                     @Valid @RequestBody OrderDto orderDto,
                                     HttpServletRequest request) {
         try {
-            val orderId = this.service.insert(customerId, orderDto);
-            val location = URI.create(request.getRequestURL().toString()).resolve(orderId);
+            final String orderId = this.service.insert(customerId, orderDto);
+            final URI location = URI.create(request.getRequestURL().toString()).resolve(orderId);
             return ResponseEntity.created(location).build();
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", customerId));
