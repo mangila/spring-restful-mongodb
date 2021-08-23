@@ -10,4 +10,5 @@ Focusing mostly on different REST test api frameworks for this API and also to p
 * Testcontainers
 
 # OpenAPI docs
+When running the application of course :P
 * http://localhost:8080/api/swagger-ui.html
