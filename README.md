@@ -2,7 +2,7 @@
 
 # spring-boot-restful-service
 Spring Boot RESTful service with aggregation and date relationship in the domain model. A simple order/customer API.
-Focusing mostly on different REST test api frameworks for this API and also to play around with Spring Docs for a better API documentation experience.
+Focusing mainly on different REST test api frameworks for this API and also to play around with Spring Docs for a better API documentation experience.
 
 * Spring MockMVC
 * Spring data DataMongoTest
