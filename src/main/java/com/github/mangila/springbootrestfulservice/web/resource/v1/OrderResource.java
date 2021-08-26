@@ -1,9 +1,8 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
-import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
-import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequestMapping("v1/order")
 @RestController
@@ -24,12 +25,12 @@ public class OrderResource {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<OrderDto>> findAll() {
         return ResponseEntity.ok(this.service.findAll());
     }
 
-    @GetMapping("{id}")
+    @GetMapping(value = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderDto> findById(@PathVariable String id) {
         try {
             final OrderDto o = this.service.findById(id);
@@ -39,7 +40,7 @@ public class OrderResource {
         }
     }
 
-    @PostMapping("{customerId}")
+    @PostMapping(value = "{customerId}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@PathVariable String customerId,
                                     @Valid @RequestBody OrderDto orderDto,
                                     HttpServletRequest request) {
@@ -52,7 +53,7 @@ public class OrderResource {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
             this.service.deleteById(id);

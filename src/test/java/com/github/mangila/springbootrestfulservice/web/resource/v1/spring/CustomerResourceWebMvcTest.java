@@ -1,21 +1,24 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.spring;
 
-import com.github.mangila.springbootrestfulservice.web.resource.v1.OrderResource;
-import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.CustomerResource;
+import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(OrderResource.class)
-class OrderResourceTest {
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+
+@WebMvcTest(CustomerResource.class)
+class CustomerResourceWebMvcTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private OrderService service;
+    private CustomerService service;
 
     @Test
     void findAll() {
@@ -28,7 +31,12 @@ class OrderResourceTest {
     }
 
     @Test
-    void insertNewOrder() {
+    void insertNewCustomer() {
+        //TODO impl
+    }
+
+    @Test
+    void updateCustomer() {
         //TODO impl
     }
 

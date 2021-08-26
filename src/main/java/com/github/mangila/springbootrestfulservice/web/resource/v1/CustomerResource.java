@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RequestMapping("v1/customer")
 @RestController
 public class CustomerResource {
@@ -25,12 +27,12 @@ public class CustomerResource {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CustomerDto>> findAll() {
         return ResponseEntity.ok(this.service.findAll());
     }
 
-    @GetMapping("{id}")
+    @GetMapping(value = "{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomerDto> findById(@PathVariable String id) {
         try {
             final CustomerDto c = this.service.findById(id);
@@ -40,7 +42,7 @@ public class CustomerResource {
         }
     }
 
-    @PostMapping
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@Valid @RequestBody CustomerDto customerDto,
                                     HttpServletRequest request) {
         final String id = this.service.insert(customerDto);
@@ -48,7 +50,7 @@ public class CustomerResource {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("{id}")
+    @PutMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable String id,
                                     @Valid @RequestBody CustomerDto customerDto,
                                     HttpServletRequest request) {
@@ -57,7 +59,7 @@ public class CustomerResource {
         return ResponseEntity.created(location).build();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
             this.service.deleteById(id);
