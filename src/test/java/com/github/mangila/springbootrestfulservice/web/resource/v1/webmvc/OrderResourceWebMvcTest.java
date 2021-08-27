@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice.web.resource.v1.spring;
+package com.github.mangila.springbootrestfulservice.web.resource.v1.webmvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.domain.Address;
@@ -6,6 +6,7 @@ import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.OrderResource;
 import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +22,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Tag("webmvc")
 @WebMvcTest(OrderResource.class)
 class OrderResourceWebMvcTest {
 
