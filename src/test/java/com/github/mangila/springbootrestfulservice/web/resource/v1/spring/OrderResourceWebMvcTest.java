@@ -12,8 +12,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -41,9 +42,10 @@ class OrderResourceWebMvcTest {
 
     @Test
     void findById() throws Exception {
-        when(this.service.findById("12345")).thenReturn(new OrderDto());
+        String uuid = UUID.randomUUID().toString();
+        when(this.service.findById(uuid)).thenReturn(new OrderDto());
 
-        this.mockMvc.perform(get("/v1/order/12345")
+        this.mockMvc.perform(get("/v1/order/" + uuid)
                         .accept(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -64,20 +66,23 @@ class OrderResourceWebMvcTest {
         orderDto.setAddress(new Address());
         orderDto.setAmount(2000);
         orderDto.setProducts(Lists.newArrayList());
-        when(this.service.insert("123", orderDto)).thenReturn("123");
+        String customerUUID = UUID.randomUUID().toString();
+        String orderUUID = UUID.randomUUID().toString();
+        when(this.service.insert(customerUUID, orderDto)).thenReturn(orderUUID);
 
-        this.mockMvc.perform(post("/v1/order/123")
+        this.mockMvc.perform(post("/v1/order/" + customerUUID)
                         .contentType(APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(orderDto)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(LOCATION, "http://localhost/v1/order/123"));
+                .andExpect(header().string(LOCATION, "/v1/order/" + orderUUID));
     }
 
     @Test
     void deleteById() throws Exception {
-        this.mockMvc.perform(delete("/v1/order/123")
+        String uuid = UUID.randomUUID().toString();
+        this.mockMvc.perform(delete("/v1/order/" + uuid)
                         .contentType(APPLICATION_JSON)
-                        .content("{\"id\":123}"))
+                        .content("{\"id\":" + uuid + "}"))
                 .andExpect(status().isNoContent());
     }
 }
