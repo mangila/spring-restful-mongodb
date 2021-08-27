@@ -55,7 +55,7 @@ public class CustomerResource {
     public ResponseEntity<?> update(@PathVariable String id,
                                     @Valid @RequestBody CustomerDto customerDto,
                                     HttpServletRequest request) {
-        final String customerId = this.service.update(id, customerDto);
+        this.service.update(id, customerDto);
         final URI location = URI.create(request.getRequestURI());
         return ResponseEntity.noContent().header(CONTENT_LOCATION, location.toString()).build();
     }
