@@ -43,9 +43,10 @@ class CustomerResourceWebMvcTest {
 
     @Test
     void findById() throws Exception {
-        when(this.service.findById("123")).thenReturn(new CustomerDto());
+        String uuid = UUID.randomUUID().toString();
+        when(this.service.findById(uuid)).thenReturn(new CustomerDto());
 
-        this.mockMvc.perform(get("/v1/customer/123")
+        this.mockMvc.perform(get("/v1/customer/" + uuid)
                         .accept(APPLICATION_JSON)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -58,14 +59,15 @@ class CustomerResourceWebMvcTest {
     void insertNewCustomer() throws Exception {
         CustomerDto customerDto = new CustomerDto();
         customerDto.setName("Frej");
-        when(this.service.insert(customerDto)).thenReturn("123");
+        String uuid = UUID.randomUUID().toString();
+        when(this.service.insert(customerDto)).thenReturn(uuid);
 
         this.mockMvc.perform(post("/v1/customer")
                         .contentType(APPLICATION_JSON)
                         .content(new ObjectMapper()
                                 .writeValueAsString(customerDto)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(LOCATION, "/v1/customer/123"));
+                .andExpect(header().string(LOCATION, "/v1/customer/" + uuid));
     }
 
     @Test
