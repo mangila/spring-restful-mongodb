@@ -9,6 +9,8 @@ import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,10 +29,6 @@ public class CustomerService {
         return this.mapper.toDto(this.repository.findAll());
     }
 
-    public CustomerDocument findByName(final String name) {
-        return this.repository.findByName(name);
-    }
-
     public CustomerDto findById(final String id) {
         final CustomerDocument c = this.repository.findById(id).orElseThrow(ResourceNotFoundException::new);
         return this.mapper.toDto(c);
@@ -38,6 +36,8 @@ public class CustomerService {
 
     public String insert(final CustomerDto customerDto) {
         final CustomerDocument c = this.mapper.toDocument(customerDto);
+        c.setRegistration(LocalDate.now());
+        c.setOrderHistory(new ArrayList<>());
         return this.repository.insert(c).getId();
     }
 
