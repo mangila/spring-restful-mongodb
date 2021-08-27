@@ -84,8 +84,13 @@ class CustomerResourceWebMvcTest {
     }
 
     @Test
-    void deleteById() {
+    void deleteById() throws Exception {
 
+        String uuid = UUID.randomUUID().toString();
+        this.mockMvc.perform(delete("/v1/customer/" + uuid)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"id\":" + uuid + "}"))
+                .andExpect(status().isNoContent());
 
     }
 }
