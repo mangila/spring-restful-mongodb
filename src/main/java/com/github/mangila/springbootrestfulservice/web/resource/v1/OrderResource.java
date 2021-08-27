@@ -46,7 +46,7 @@ public class OrderResource {
                                     HttpServletRequest request) {
         try {
             final String orderId = this.service.insert(customerId, orderDto);
-            final URI location = URI.create(request.getRequestURL().toString()).resolve(orderId);
+            final URI location = URI.create(request.getRequestURI()).resolve(orderId);
             return ResponseEntity.created(location).build();
         } catch (ResourceNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", customerId));

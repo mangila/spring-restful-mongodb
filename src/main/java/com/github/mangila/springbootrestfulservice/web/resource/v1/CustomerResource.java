@@ -4,7 +4,6 @@ import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,6 +13,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static org.springframework.http.HttpHeaders.CONTENT_LOCATION;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequestMapping("v1/customer")
@@ -38,7 +39,7 @@ public class CustomerResource {
             final CustomerDto c = this.service.findById(id);
             return ResponseEntity.ok(c);
         } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
+            throw new ResponseStatusException(NOT_FOUND, String.format("'%s' not found", id));
         }
     }
 
@@ -46,7 +47,7 @@ public class CustomerResource {
     public ResponseEntity<?> create(@Valid @RequestBody CustomerDto customerDto,
                                     HttpServletRequest request) {
         final String id = this.service.insert(customerDto);
-        final URI location = URI.create(request.getRequestURL().toString()).resolve(id);
+        final URI location = URI.create(request.getRequestURI() + "/" + id);
         return ResponseEntity.created(location).build();
     }
 
@@ -55,8 +56,8 @@ public class CustomerResource {
                                     @Valid @RequestBody CustomerDto customerDto,
                                     HttpServletRequest request) {
         final String customerId = this.service.update(id, customerDto);
-        final URI location = URI.create(request.getRequestURL().toString()).resolve(customerId);
-        return ResponseEntity.created(location).build();
+        final URI location = URI.create(request.getRequestURI());
+        return ResponseEntity.noContent().header(CONTENT_LOCATION, location.toString()).build();
     }
 
     @DeleteMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
@@ -65,7 +66,7 @@ public class CustomerResource {
             this.service.deleteById(id);
             return ResponseEntity.noContent().build();
         } catch (ResourceNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("'%s' not found", id));
+            throw new ResponseStatusException(NOT_FOUND, String.format("'%s' not found", id));
         }
     }
 }
