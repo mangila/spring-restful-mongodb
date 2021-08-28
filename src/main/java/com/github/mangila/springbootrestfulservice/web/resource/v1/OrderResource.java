@@ -53,7 +53,7 @@ public class OrderResource {
         }
     }
 
-    @DeleteMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
             this.service.deleteById(id);

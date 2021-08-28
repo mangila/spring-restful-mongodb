@@ -36,15 +36,15 @@ public class CustomerResourceSpringBootTest {
     @LocalServerPort
     private int port;
 
-    private String customerUrl;
-
-    private final List<String> validTestIds = new ArrayList<>();
-
     @Autowired
     private TestRestTemplate http;
 
     @Autowired
     private CustomerRepository repository;
+
+    private String customerUrl;
+
+    private final List<String> validCustomerIds = new ArrayList<>();
 
     @BeforeEach
     void beforeEach() {
@@ -60,7 +60,7 @@ public class CustomerResourceSpringBootTest {
                     ));
                     c.setOrderHistory(new ArrayList<>());
                     String id = this.repository.insert(c).getId();
-                    this.validTestIds.add(id);
+                    this.validCustomerIds.add(id);
                 });
     }
 
@@ -71,7 +71,7 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void findAll() {
-        ResponseEntity<CustomerDto[]> response = http.getForEntity(this.customerUrl, CustomerDto[].class);
+        ResponseEntity<CustomerDto[]> response = this.http.getForEntity(this.customerUrl, CustomerDto[].class);
         assertEquals(OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(4, response.getBody().length);
@@ -79,8 +79,8 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void findById() {
-        String url = this.customerUrl + "" + this.validTestIds.get(0);
-        ResponseEntity<CustomerDto> response = http.getForEntity(url, CustomerDto.class);
+        String url = this.customerUrl + this.validCustomerIds.get(0);
+        ResponseEntity<CustomerDto> response = this.http.getForEntity(url, CustomerDto.class);
         assertEquals(OK, response.getStatusCode());
         assertNotNull(response.getBody());
         CustomerDto customerDto = response.getBody();
@@ -91,18 +91,18 @@ public class CustomerResourceSpringBootTest {
     void insert() {
         CustomerDto c = new CustomerDto();
         c.setName("Tyr");
-        ResponseEntity<String> response = http.postForEntity(this.customerUrl, c, String.class);
+        ResponseEntity<String> response = this.http.postForEntity(this.customerUrl, c, String.class);
         assertEquals(CREATED, response.getStatusCode());
         assertTrue(response.getHeaders().containsKey(LOCATION));
     }
 
     @Test
     void insertAndThrowValidationErrors() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
         CustomerDto c = new CustomerDto();
-        ResponseEntity<String> response = http.postForEntity(this.customerUrl, c, String.class);
+        ResponseEntity<String> response = this.http.postForEntity(this.customerUrl, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
+        ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree(response.getBody());
         String nameField = jsonNode.get("name").asText();
         assertEquals("must not be blank", nameField);
@@ -111,9 +111,10 @@ public class CustomerResourceSpringBootTest {
         c.setRegistration(LocalDate.now());
         c.setName("Al");
         c.setOrderHistory(new ArrayList<>());
-        response = http.postForEntity(this.customerUrl, c, String.class);
+        response = this.http.postForEntity(this.customerUrl, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
+
         jsonNode = mapper.readTree(response.getBody());
         nameField = jsonNode.get("name").asText();
         assertEquals("size must be between 3 and 100", nameField);
@@ -127,8 +128,8 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void updateCustomer() {
-        String url = this.customerUrl + "" + this.validTestIds.get(0);
-        ResponseEntity<CustomerDto> getResponse = http.getForEntity(url, CustomerDto.class);
+        String url = this.customerUrl + this.validCustomerIds.get(0);
+        ResponseEntity<CustomerDto> getResponse = this.http.getForEntity(url, CustomerDto.class);
         assertEquals(OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
         CustomerDto c = getResponse.getBody();
@@ -137,7 +138,7 @@ public class CustomerResourceSpringBootTest {
         c = new CustomerDto();
         c.setName("Brage");
         HttpEntity<CustomerDto> httpEntity = new HttpEntity<>(c, null);
-        ResponseEntity<String> putResponse = http.exchange(url, HttpMethod.PUT, httpEntity, String.class);
+        ResponseEntity<String> putResponse = this.http.exchange(url, HttpMethod.PUT, httpEntity, String.class);
         assertEquals(NO_CONTENT, putResponse.getStatusCode());
         assertTrue(putResponse.getHeaders().containsKey(CONTENT_LOCATION));
 
@@ -150,11 +151,11 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void deleteById() {
-        String url = this.customerUrl + "" + this.validTestIds.get(0);
-        ResponseEntity<String> deleteResponse = http.exchange(url, HttpMethod.DELETE, null, String.class);
+        String url = this.customerUrl + this.validCustomerIds.get(0);
+        ResponseEntity<String> deleteResponse = this.http.exchange(url, HttpMethod.DELETE, null, String.class);
         assertEquals(NO_CONTENT, deleteResponse.getStatusCode());
 
-        ResponseEntity<String> getResponse = http.getForEntity(url, String.class);
+        ResponseEntity<String> getResponse = this.http.getForEntity(url, String.class);
         assertEquals(NOT_FOUND, getResponse.getStatusCode());
     }
 
