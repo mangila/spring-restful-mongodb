@@ -2,7 +2,7 @@
 
 # spring-boot-restful-service
 Spring Boot RESTful service with aggregation and date relationship in the domain model following data transfer object(DTO) architecture with a regular MVC and a service layer. A simple order/customer API with C.R.U.D operations.
-This repo is focusing mainly on different REST test api frameworks for this API and also to play around with Spring Docs for a better API documentation experience.
+This repo is focusing mainly on different REST test api frameworks and also Spring test annotations for this API and also to play around with Spring Docs for a better API documentation experience.
 
 * @WebMVCTest
 * @DataMongoTest
