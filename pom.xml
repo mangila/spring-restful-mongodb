@@ -55,7 +55,7 @@
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <version>${flapdoodle.embed.mongo.version}</version>
-            <scope>runtime</scope>
+            <scope>test</scope>
         </dependency>
         <!--   LOMBOK n MAPSTRUCT    -->
         <dependency>
