@@ -48,6 +48,7 @@ public class OrderResourceDataMongoTest {
         orderDocument.setAmount(2000);
         String id = this.repository.insert(orderDocument).getId();
         orderDocument = this.repository.findById(id).orElseThrow();
+        assertEquals(2000, orderDocument.getAmount());
         orderDocument.setAmount(3000);
         this.repository.save(orderDocument);
         assertEquals(3000, this.repository.findById(id).get().getAmount());
