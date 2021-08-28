@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
@@ -21,10 +23,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpHeaders.CONTENT_LOCATION;
+import static org.springframework.http.HttpHeaders.LOCATION;
+import static org.springframework.http.HttpStatus.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerResourceSpringBootTest {
@@ -34,7 +36,7 @@ public class CustomerResourceSpringBootTest {
 
     private String customerUrl;
 
-    private final List<String> testIds = new ArrayList<>();
+    private final List<String> validTestIds = new ArrayList<>();
 
     @Autowired
     private TestRestTemplate http;
@@ -56,7 +58,7 @@ public class CustomerResourceSpringBootTest {
                     ));
                     c.setOrderHistory(new ArrayList<>());
                     String id = this.repository.insert(c).getId();
-                    this.testIds.add(id);
+                    this.validTestIds.add(id);
                 });
     }
 
@@ -75,7 +77,7 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void findById() {
-        String url = this.customerUrl + "" + this.testIds.get(0);
+        String url = this.customerUrl + "" + this.validTestIds.get(0);
         ResponseEntity<CustomerDto> response = http.getForEntity(url, CustomerDto.class);
         assertEquals(OK, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -84,21 +86,32 @@ public class CustomerResourceSpringBootTest {
     }
 
     @Test
+    void insert() {
+        CustomerDto c = new CustomerDto();
+        c.setName("Tyr");
+        ResponseEntity<String> response = http.postForEntity(this.customerUrl, c, String.class);
+        assertEquals(CREATED, response.getStatusCode());
+        assertTrue(response.getHeaders().containsKey(LOCATION));
+    }
+
+    @Test
     void insertAndThrowValidationErrors() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         CustomerDto c = new CustomerDto();
         ResponseEntity<String> response = http.postForEntity(this.customerUrl, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
         JsonNode jsonNode = mapper.readTree(response.getBody());
         String nameField = jsonNode.get("name").asText();
         assertEquals("must not be blank", nameField);
 
         c.setId("some id");
-        c.setRegistration(LocalDate.now().plusDays(1));
+        c.setRegistration(LocalDate.now());
         c.setName("Al");
         c.setOrderHistory(new ArrayList<>());
         response = http.postForEntity(this.customerUrl, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
         jsonNode = mapper.readTree(response.getBody());
         nameField = jsonNode.get("name").asText();
         assertEquals("size must be between 3 and 100", nameField);
@@ -112,12 +125,35 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void updateCustomer() {
+        String url = this.customerUrl + "" + this.validTestIds.get(0);
+        ResponseEntity<CustomerDto> getResponse = http.getForEntity(url, CustomerDto.class);
+        assertEquals(OK, getResponse.getStatusCode());
+        assertNotNull(getResponse.getBody());
+        CustomerDto c = getResponse.getBody();
+        assertEquals("Idun", c.getName());
 
+        c = new CustomerDto();
+        c.setName("Brage");
+        HttpEntity<CustomerDto> httpEntity = new HttpEntity<>(c, null);
+        ResponseEntity<String> putResponse = http.exchange(url, HttpMethod.PUT, httpEntity, String.class);
+        assertEquals(NO_CONTENT, putResponse.getStatusCode());
+        assertTrue(putResponse.getHeaders().containsKey(CONTENT_LOCATION));
+
+        getResponse = this.http.getForEntity(url, CustomerDto.class);
+        assertEquals(OK, getResponse.getStatusCode());
+        assertNotNull(getResponse.getBody());
+        c = getResponse.getBody();
+        assertEquals("Brage", c.getName());
     }
 
     @Test
     void deleteById() {
+        String url = this.customerUrl + "" + this.validTestIds.get(0);
+        ResponseEntity<String> deleteResponse = http.exchange(url, HttpMethod.DELETE, null, String.class);
+        assertEquals(NO_CONTENT, deleteResponse.getStatusCode());
 
+        ResponseEntity<String> getResponse = http.getForEntity(url, String.class);
+        assertEquals(NOT_FOUND, getResponse.getStatusCode());
     }
 
 }

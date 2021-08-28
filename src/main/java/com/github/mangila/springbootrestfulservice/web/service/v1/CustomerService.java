@@ -51,6 +51,11 @@ public class CustomerService {
 
     public String update(String id, CustomerDto customerDto) {
         if (this.repository.existsById(id)) {
+            CustomerDto old = this.findById(id);
+            customerDto.setId(id);
+            customerDto.setName(customerDto.getName());
+            customerDto.setRegistration(old.getRegistration());
+            customerDto.setOrderHistory(old.getOrderHistory());
             return this.repository.save(this.mapper.toDocument(customerDto)).getId();
         } else {
             return this.insert(customerDto);

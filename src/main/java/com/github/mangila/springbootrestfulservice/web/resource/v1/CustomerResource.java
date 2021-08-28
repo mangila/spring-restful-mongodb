@@ -60,7 +60,7 @@ public class CustomerResource {
         return ResponseEntity.noContent().header(CONTENT_LOCATION, location.toString()).build();
     }
 
-    @DeleteMapping(value = "{id}", consumes = APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<?> deleteById(@PathVariable String id) {
         try {
             this.service.deleteById(id);
