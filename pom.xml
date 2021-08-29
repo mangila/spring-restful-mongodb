@@ -51,21 +51,6 @@
             <optional>true</optional>
         </dependency>
 
-        <!--   REST-ASSURED     -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${rest.assured.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- EMBEDDED MONGODB -->
-        <dependency>
-            <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
-            <version>${flapdoodle.embed.mongo.version}</version>
-            <scope>test</scope>
-        </dependency>
         <!--   LOMBOK n MAPSTRUCT    -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -92,6 +77,24 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--   REST-ASSURED     -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest.assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- EMBEDDED MONGODB -->
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${flapdoodle.embed.mongo.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- END TEST -->
+
     </dependencies>
 
     <build>
