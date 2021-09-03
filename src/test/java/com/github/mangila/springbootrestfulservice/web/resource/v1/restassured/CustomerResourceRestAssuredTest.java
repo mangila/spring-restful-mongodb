@@ -102,23 +102,21 @@ public class CustomerResourceRestAssuredTest {
 
     @Test
     void deleteById() {
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .delete("customer/" + this.testId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value())
-                .extract().response();
 
-        response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .get("customer/" + this.testId)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
-                .extract().response();
 
     }
 
