@@ -108,7 +108,7 @@ public class CustomerResourceRestAssuredTest {
                 .when()
                 .delete("customer/" + this.testId)
                 .then()
-                .statusCode(HttpStatus.NO_CONTENT.value())
+                .statusCode(HttpStatus.NO_CONTENT.value());
 
         given()
                 .contentType(ContentType.JSON)
