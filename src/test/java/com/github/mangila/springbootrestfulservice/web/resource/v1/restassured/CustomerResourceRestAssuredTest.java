@@ -116,7 +116,7 @@ public class CustomerResourceRestAssuredTest {
                 .when()
                 .get("customer/" + this.testId)
                 .then()
-                .statusCode(HttpStatus.NOT_FOUND.value())
+                .statusCode(HttpStatus.NOT_FOUND.value());
 
     }
 
