@@ -25,6 +25,7 @@
         <org.springdoc.version>1.5.9</org.springdoc.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <spring.boot.maven.plugin.version>2.5.2</spring.boot.maven.plugin.version>
+        <testcontainers.version>1.16.0</testcontainers.version>
     </properties>
     <dependencies>
         <!--   SPRING BOOT     -->
@@ -51,7 +52,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!--   LOMBOK n MAPSTRUCT    -->
+        <!--   LOMBOK n MAPSTRUCT -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -90,6 +91,26 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>spring-mock-mvc</artifactId>
             <version>${rest.assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--   TEST-CONTAINERS     -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
