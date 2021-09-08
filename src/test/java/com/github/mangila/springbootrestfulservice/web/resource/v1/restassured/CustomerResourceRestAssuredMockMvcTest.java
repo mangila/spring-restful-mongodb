@@ -7,7 +7,6 @@ import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.restassured.module.mockmvc.response.MockMvcResponse;
 import org.assertj.core.util.Lists;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -15,12 +14,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 /**
@@ -74,8 +75,57 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .get("v1/customer/" + uuid)
                 .then()
                 .status(HttpStatus.OK)
-                .body("id", Matchers.equalTo(uuid))
-                .body("name", Matchers.equalTo("Hasse"));
+                .body("id", equalTo(uuid))
+                .body("name", equalTo("Hasse"));
+    }
+
+    @Test
+    void insert() {
+        String uuid = UUID.randomUUID().toString();
+        CustomerDto c = new CustomerDto();
+        c.setName("Frasse");
+        when(this.service.insert(c)).thenReturn(uuid);
+
+        RestAssuredMockMvc.given()
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(ContentType.JSON)
+                .body(c)
+                .when()
+                .post("v1/customer")
+                .then()
+                .status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, equalTo("/v1/customer/" + uuid));
+    }
+
+    @Test
+    void update() {
+        String uuid = UUID.randomUUID().toString();
+        CustomerDto c = new CustomerDto();
+        c.setName("Tage");
+        when(this.service.update(uuid, c)).thenReturn(uuid);
+
+        RestAssuredMockMvc.given()
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(ContentType.JSON)
+                .body(c)
+                .when()
+                .put("v1/customer/" + uuid)
+                .then()
+                .status(HttpStatus.NO_CONTENT)
+                .header(HttpHeaders.CONTENT_LOCATION, equalTo("/v1/customer/" + uuid));
+    }
+
+    @Test
+    void deleteById() {
+        String uuid = UUID.randomUUID().toString();
+        RestAssuredMockMvc.given()
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(ContentType.JSON)
+                .body(uuid)
+                .when()
+                .delete("v1/customer/" + uuid)
+                .then()
+                .status(HttpStatus.NO_CONTENT);
     }
 
 }
