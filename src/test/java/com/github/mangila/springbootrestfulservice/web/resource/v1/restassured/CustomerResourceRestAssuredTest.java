@@ -23,6 +23,11 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * given() — specifies the HTTP request details
+ * when() — specifies the HTTP verb as well as the route
+ * then() — validates the HTTP response
+ */
 @Tag("restassured")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerResourceRestAssuredTest {
