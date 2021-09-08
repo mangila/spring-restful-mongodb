@@ -101,6 +101,27 @@ public class CustomerResourceRestAssuredTest {
     }
 
     @Test
+    void update() {
+        CustomerDto c = new CustomerDto();
+        c.setName("Thor");
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .body(c)
+                .put("customer/" + this.testId)
+                .then()
+                .statusCode(HttpStatus.NO_CONTENT.value())
+                .extract().response();
+
+        String contentLocation = response.getHeaders()
+                .getValue(HttpHeaders.CONTENT_LOCATION);
+        assertNotNull(contentLocation);
+
+    }
+
+    @Test
     void deleteById() {
         given()
                 .contentType(ContentType.JSON)
