@@ -1,6 +1,27 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
+import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.CustomerResource;
+import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
+import io.restassured.http.ContentType;
+import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import io.restassured.module.mockmvc.response.MockMvcResponse;
+import org.assertj.core.util.Lists;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.UUID;
+
+import static org.mockito.Mockito.when;
 
 /**
  * given() — specifies the HTTP request details
@@ -8,5 +29,53 @@ import org.junit.jupiter.api.Tag;
  * then() — validates the HTTP response
  */
 @Tag("restassured")
+@WebMvcTest(CustomerResource.class)
 public class CustomerResourceRestAssuredMockMvcTest {
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @MockBean
+    CustomerService service;
+
+    @BeforeEach
+    void beforeEach() {
+        RestAssuredMockMvc.mockMvc(this.mockMvc);
+    }
+
+    @Test
+    void findAll() {
+        when(this.service.findAll()).thenReturn(Lists.newArrayList(new CustomerDto()));
+
+        MockMvcResponse response = RestAssuredMockMvc.given()
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("v1/customer")
+                .then()
+                .status(HttpStatus.OK)
+                .extract().response();
+        CustomerDto[] body = response.getBody().as(CustomerDto[].class);
+        Assertions.assertEquals(1, body.length);
+    }
+
+    @Test
+    void findById() {
+        String uuid = UUID.randomUUID().toString();
+        CustomerDto c = new CustomerDto();
+        c.setId(uuid);
+        c.setName("Hasse");
+        when(this.service.findById(uuid)).thenReturn(c);
+
+        RestAssuredMockMvc.given()
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(ContentType.JSON)
+                .when()
+                .get("v1/customer/" + uuid)
+                .then()
+                .status(HttpStatus.OK)
+                .body("id", Matchers.equalTo(uuid))
+                .body("name", Matchers.equalTo("Hasse"));
+    }
+
 }
