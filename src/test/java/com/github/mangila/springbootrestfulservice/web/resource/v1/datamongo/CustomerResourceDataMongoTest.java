@@ -2,6 +2,7 @@ package com.github.mangila.springbootrestfulservice.web.resource.v1.datamongo;
 
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("datamongo")
 @DataMongoTest
-public class CustomerResourceDataMongoTest extends DataMongoTestBase {
+public class CustomerResourceDataMongoTest extends EmbeddedMongoDatabaseSeed {
 
     @Autowired
     private CustomerRepository repository;

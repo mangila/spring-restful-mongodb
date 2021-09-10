@@ -13,7 +13,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.io.IOException;
 
 @Testcontainers
-public abstract class AbstractMongoDBTestContainer {
+public abstract class PredefinedMongoDBTestContainer {
 
     @Container
     private static final MongoDBContainer container =

@@ -10,6 +10,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @EnableAutoConfiguration(exclude = EmbeddedMongoAutoConfiguration.class)
 @Testcontainers
-public class OrderResourceSpringBootTestContainersTest extends AbstractMongoDBTestContainer {
+public class OrderResourceSpringBootTestContainersTest extends PredefinedMongoDBTestContainer {
 
 }

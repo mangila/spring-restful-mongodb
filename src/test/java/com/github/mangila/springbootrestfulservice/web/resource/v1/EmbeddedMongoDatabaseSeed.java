@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice.web.resource.v1.datamongo;
+package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public class DataMongoTestBase {
+public class EmbeddedMongoDatabaseSeed {
 
     @Autowired
     private CustomerRepository customerRepository;

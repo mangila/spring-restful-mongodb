@@ -14,7 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @EnableAutoConfiguration(exclude = EmbeddedMongoAutoConfiguration.class)
 @Testcontainers
-public class CustomerResourceSpringBootTestContainersTest extends AbstractMongoDBTestContainer {
+public class CustomerResourceSpringBootTestContainersTest extends PredefinedMongoDBTestContainer {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
