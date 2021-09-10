@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.domain.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -22,7 +23,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Tag("springboot")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OrderResourceSpringBootTest {
+public class OrderResourceSpringBootTest extends EmbeddedMongoDatabaseSeed {
 
     @LocalServerPort
     private int port;
