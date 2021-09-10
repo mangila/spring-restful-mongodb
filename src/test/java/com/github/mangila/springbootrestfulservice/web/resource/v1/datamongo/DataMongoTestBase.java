@@ -1,39 +1,31 @@
-package com.github.mangila.springbootrestfulservice;
+package com.github.mangila.springbootrestfulservice.web.resource.v1.datamongo;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.mangila.springbootrestfulservice.DatabaseSeeder;
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-@Component
-@Profile("dev")
-@Slf4j
-public class DatabaseSeeder implements InitializingBean {
-
-    private final CustomerRepository customerRepository;
-
-    private final OrderRepository orderRepository;
+public class DataMongoTestBase {
 
     @Autowired
-    public DatabaseSeeder(CustomerRepository customerRepository, OrderRepository orderRepository) {
-        this.customerRepository = customerRepository;
-        this.orderRepository = orderRepository;
-    }
+    private CustomerRepository customerRepository;
 
-    @Override
-    public void afterPropertiesSet() throws IOException {
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @BeforeEach
+    void beforeEach() throws IOException {
         ObjectMapper mapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule());
         URL url = DatabaseSeeder.class.getResource("/customer-dev-schema.json");
@@ -44,6 +36,12 @@ public class DatabaseSeeder implements InitializingBean {
         var orders = mapper
                 .readValue(url, new TypeReference<List<OrderDocument>>() {});
         this.orderRepository.insert(orders);
-        log.info("Database seeded with dev data.");
     }
+
+    @AfterEach
+    void afterEach() {
+        this.customerRepository.deleteAll();
+        this.orderRepository.deleteAll();
+    }
+
 }

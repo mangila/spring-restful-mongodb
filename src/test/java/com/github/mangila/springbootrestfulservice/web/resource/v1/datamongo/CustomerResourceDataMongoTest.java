@@ -2,8 +2,7 @@ package com.github.mangila.springbootrestfulservice.web.resource.v1.datamongo;
 
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,52 +13,39 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("datamongo")
 @DataMongoTest
-public class CustomerResourceDataMongoTest {
+public class CustomerResourceDataMongoTest extends DataMongoTestBase {
 
     @Autowired
     private CustomerRepository repository;
 
-    @AfterEach
-    void afterEach() {
-        this.repository.deleteAll();
-    }
+    private final String testId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
     @Test
     void findAll() {
-        this.repository.saveAll(Lists.newArrayList(
-                new CustomerDocument(),
-                new CustomerDocument(),
-                new CustomerDocument()
-        ));
-        assertEquals(3, this.repository.findAll().size());
-        assertEquals(3, this.repository.count());
+        assertEquals(5, this.repository.findAll().size());
+        assertEquals(5, this.repository.count());
     }
 
     @Test
     void findById() {
-        String id = this.repository.insert(new CustomerDocument()).getId();
-        assertTrue(this.repository.existsById(id));
-        assertTrue(this.repository.findById(id).isPresent());
+        assertTrue(this.repository.existsById(this.testId));
+        assertTrue(this.repository.findById(this.testId).isPresent());
     }
 
     @Test
     void updateCustomer() {
-        CustomerDocument customerDocument = new CustomerDocument();
-        customerDocument.setName("Balder");
-        String id = this.repository.insert(customerDocument).getId();
-        customerDocument = this.repository.findById(id).orElseThrow();
-        assertEquals("Balder", customerDocument.getName());
-        customerDocument.setName("Hel");
-        this.repository.save(customerDocument);
-        assertEquals("Hel", this.repository.findById(id).get().getName());
+        CustomerDocument c = this.repository.findById(this.testId).get();
+        c.setName("Bilbo");
+        this.repository.save(c);
+        c = this.repository.findById(this.testId).get();
+        Assertions.assertNotEquals("Aragorn", c.getName());
+        Assertions.assertEquals("Bilbo", c.getName());
     }
 
     @Test
     void deleteById() {
-        String id = this.repository.insert(new CustomerDocument()).getId();
-        assertEquals(1, this.repository.count());
-        this.repository.deleteById(id);
-        assertEquals(0, this.repository.count());
+        this.repository.deleteById(this.testId);
+        assertEquals(4, this.repository.count());
     }
 
 }
