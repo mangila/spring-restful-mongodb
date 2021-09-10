@@ -1,0 +1,48 @@
+[
+  {
+    "id": "c8127464-3559-45ca-a70e-51f9c3a6d1c0",
+    "name": "Aragorn",
+    "registration": "2019-04-02",
+    "orderHistory": [
+      "2cdf9886-f565-4d5f-8bbc-2561806b2052",
+      "8e045821-2853-48d3-86c1-afcba912f009",
+      "70ff892d-db55-4ee8-8045-349f81abfeba"
+    ]
+  },
+  {
+    "id": "799e82fe-baa6-483e-94a1-6f718783ab94",
+    "name": "Legolas",
+    "registration": "2018-07-16",
+    "orderHistory": [
+      "6492825d-797c-4257-aec5-334573b633e0",
+      "e09af19f-5ab8-43f6-aa4a-a2f630c2c892",
+      "682d67d6-7350-4085-97c4-c670deeec4a8"
+    ]
+  },
+  {
+    "id": "a7d4cd5e-70eb-4ef8-9249-99a7eb7c7347",
+    "name": "Gimli",
+    "registration": "2016-08-22",
+    "orderHistory": [
+      "4cb7a6e3-a110-426f-b6f3-2212e840b005",
+      "49527561-7a61-4263-9f9e-adf3b57f85c6"
+    ]
+  },
+  {
+    "id": "18619ca9-23dc-4ee2-b290-13209874977f",
+    "name": "Frodo",
+    "registration": "2015-07-07",
+    "orderHistory": [
+      "3fef4709-cca4-453f-8d1e-5a418aad6ced",
+      "6146b0f4-1050-4a0f-984d-49103c483322"
+    ]
+  },
+  {
+    "id": "3ac050c9-9122-445d-920b-07e0a29ea115",
+    "name": "Sam",
+    "registration": "2013-02-18",
+    "orderHistory": [
+      "d7f60b21-0d94-4c0e-b96b-04f969919dc4"
+    ]
+  }
+]
