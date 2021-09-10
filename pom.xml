@@ -52,6 +52,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- JACKSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.12.5</version>
+        </dependency>
+
         <!--   LOMBOK n MAPSTRUCT -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -119,10 +126,9 @@
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
             <version>${flapdoodle.embed.mongo.version}</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
         <!-- END TEST -->
-
     </dependencies>
 
     <build>
