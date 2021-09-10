@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.List;
 
 @Component
-public class EmbeddedMongoDatabaseSeed {
+public abstract class EmbeddedMongoDatabaseSeed {
 
     @Autowired
     private CustomerRepository customerRepository;
