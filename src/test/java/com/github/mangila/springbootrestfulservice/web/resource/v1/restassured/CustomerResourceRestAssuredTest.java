@@ -97,6 +97,16 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
                 .statusCode(HttpStatus.NO_CONTENT.value())
                 .header(HttpHeaders.CONTENT_LOCATION,
                         equalTo("/api/v1/customer/" + this.customerId));
+
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .get("customer/" + this.customerId)
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("name", equalTo("Tom Bombadil"));
+
     }
 
     @Test
