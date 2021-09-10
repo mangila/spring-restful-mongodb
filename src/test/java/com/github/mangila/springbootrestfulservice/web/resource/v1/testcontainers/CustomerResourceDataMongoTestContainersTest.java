@@ -8,6 +8,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Tag("testcontainers")
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
 @Testcontainers
-public class CustomerResourceDataPredefinedMongoTestContainersTest extends PredefinedMongoDBTestContainer {
+public class CustomerResourceDataMongoTestContainersTest extends PredefinedMongoDBTestContainer {
 
 }

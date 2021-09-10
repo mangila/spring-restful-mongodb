@@ -1,25 +1,21 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -30,32 +26,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @Tag("restassured")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomerResourceRestAssuredTest {
+public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
 
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private CustomerRepository repository;
-
-    private String testId;
+    private final String testId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEachInitRestAssuredConfig() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = this.port;
         RestAssured.basePath = "/api/v1";
-
-        CustomerDocument c = new CustomerDocument();
-        c.setName("Heimdal");
-        c.setRegistration(LocalDate.now());
-        c.setOrderHistory(new ArrayList<>());
-        this.testId = repository.insert(c).getId();
-    }
-
-    @AfterEach
-    void afterEach() {
-        this.repository.deleteAll();
     }
 
     @Test
@@ -69,29 +51,27 @@ public class CustomerResourceRestAssuredTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract().response();
         CustomerDto[] body = response.getBody().as(CustomerDto[].class);
-        assertEquals(body.length, 1);
+        assertEquals(body.length, 5);
     }
 
     @Test
     void findById() {
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .get("customer/" + this.testId)
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .extract().response();
-        CustomerDto body = response.getBody().as(CustomerDto.class);
-        assertEquals(body.getName(), "Heimdal");
+                .body("name", equalTo("Aragorn"));
     }
 
     @Test
     void insert() {
         CustomerDto c = new CustomerDto();
-        c.setName("Thor");
+        c.setName("Gandalf");
 
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
@@ -99,18 +79,15 @@ public class CustomerResourceRestAssuredTest {
                 .post("customer")
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .extract().response();
-        String location = response.getHeaders()
-                .getValue(HttpHeaders.LOCATION);
-        assertNotNull(location);
+                .header(HttpHeaders.LOCATION, notNullValue());
     }
 
     @Test
     void update() {
         CustomerDto c = new CustomerDto();
-        c.setName("Thor");
+        c.setName("Tom Bombadil");
 
-        Response response = given()
+       given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
@@ -118,12 +95,8 @@ public class CustomerResourceRestAssuredTest {
                 .put("customer/" + this.testId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value())
-                .extract().response();
-
-        String contentLocation = response.getHeaders()
-                .getValue(HttpHeaders.CONTENT_LOCATION);
-        assertNotNull(contentLocation);
-
+                .header(HttpHeaders.CONTENT_LOCATION,
+                        equalTo("/api/v1/customer/" + this.testId));
     }
 
     @Test

@@ -11,11 +11,13 @@ import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderReposi
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+@Component
 public class EmbeddedMongoDatabaseSeed {
 
     @Autowired

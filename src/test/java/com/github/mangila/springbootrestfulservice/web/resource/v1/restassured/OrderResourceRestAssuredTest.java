@@ -1,30 +1,24 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
 import com.github.mangila.springbootrestfulservice.domain.Address;
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
-
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * given() — specifies the HTTP request details
@@ -33,46 +27,20 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @Tag("restassured")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OrderResourceRestAssuredTest {
+public class OrderResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
 
     @LocalServerPort
     private int port;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final String customerId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    private String customerTestId;
-
-    private String orderTestId;
+    private final String orderId = "2cdf9886-f565-4d5f-8bbc-2561806b2052";
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEachInitRestAssuredConfig() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = this.port;
         RestAssured.basePath = "/api/v1";
-
-        CustomerDocument c = new CustomerDocument();
-        c.setName("Kungen");
-        c.setOrderHistory(Lists.emptyList());
-        c.setRegistration(LocalDate.now());
-        this.customerTestId = this.customerRepository.insert(c).getId();
-
-        OrderDocument o = new OrderDocument();
-        o.setProducts(Lists.newArrayList("Milk", "Creme Fraiche", "Wrangler Jeans"));
-        o.setAmount(750);
-        Address a = new Address();
-        a.setCity("Stockholm");
-        a.setStreet("Stockholmsvägen 101");
-        o.setAddress(a);
-        this.orderTestId = orderRepository.insert(o).getId();
-    }
-
-    @AfterEach
-    void afterEach() {
-        this.orderRepository.deleteAll();
     }
 
     @Test
@@ -86,21 +54,21 @@ public class OrderResourceRestAssuredTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract().response();
         OrderDto[] body = response.getBody().as(OrderDto[].class);
-        assertEquals(body.length, 1);
+        assertEquals(body.length, 11);
     }
 
     @Test
     void findById() {
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .get("order/" + this.orderTestId)
+                .get("order/" + this.orderId)
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .extract().response();
-        OrderDto body = response.getBody().as(OrderDto.class);
-        assertEquals("Stockholm", body.getAddress().getCity());
+                .body("amount", equalTo(750))
+                .body("address.street", equalTo("Minas Tirith road 101"))
+                .body("address.city", equalTo("Gondor"));
     }
 
     @Test
@@ -109,34 +77,19 @@ public class OrderResourceRestAssuredTest {
         o.setAmount(700);
         o.setProducts(Lists.newArrayList("Bread", "Ham", "Butter"));
         Address a = new Address();
-        a.setStreet("Paradisäppelvägen 102");
-        a.setCity("Ankeborg");
+        a.setStreet("Orc Street 102");
+        a.setCity("Mordor");
         o.setAddress(a);
 
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
                 .body(o)
-                .post("order/" + this.customerTestId)
+                .post("order/" + this.customerId)
                 .then()
                 .statusCode(HttpStatus.CREATED.value())
-                .extract().response();
-        String location = response.getHeaders()
-                .getValue(HttpHeaders.LOCATION);
-        assertNotNull(location);
-
-        response = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .when()
-                .get("order")
-                .then()
-                .statusCode(HttpStatus.OK.value())
-                .extract().response();
-        OrderDto[] body = response.getBody().as(OrderDto[].class);
-        assertEquals(body.length, 2);
-
+                .header(HttpHeaders.LOCATION, notNullValue());
     }
 
     @Test
@@ -145,10 +98,9 @@ public class OrderResourceRestAssuredTest {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .delete("order/" + this.orderTestId)
+                .delete("order/" + this.orderId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
-
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -159,7 +111,7 @@ public class OrderResourceRestAssuredTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract().response();
         OrderDto[] body = response.getBody().as(OrderDto[].class);
-        assertEquals(body.length, 0);
+        assertEquals(body.length, 10);
     }
 
 }

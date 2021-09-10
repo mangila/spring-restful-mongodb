@@ -65,7 +65,7 @@ public class CustomerResourceRestAssuredMockMvcTest {
         String uuid = UUID.randomUUID().toString();
         CustomerDto c = new CustomerDto();
         c.setId(uuid);
-        c.setName("Hasse");
+        c.setName("Elrond");
         when(this.service.findById(uuid)).thenReturn(c);
 
         RestAssuredMockMvc.given()
@@ -76,14 +76,14 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .then()
                 .status(HttpStatus.OK)
                 .body("id", equalTo(uuid))
-                .body("name", equalTo("Hasse"));
+                .body("name", equalTo("Elrond"));
     }
 
     @Test
     void insert() {
         String uuid = UUID.randomUUID().toString();
         CustomerDto c = new CustomerDto();
-        c.setName("Frasse");
+        c.setName("Galadriel");
         when(this.service.insert(c)).thenReturn(uuid);
 
         RestAssuredMockMvc.given()
@@ -101,7 +101,7 @@ public class CustomerResourceRestAssuredMockMvcTest {
     void update() {
         String uuid = UUID.randomUUID().toString();
         CustomerDto c = new CustomerDto();
-        c.setName("Tage");
+        c.setName("Sauron");
         when(this.service.update(uuid, c)).thenReturn(uuid);
 
         RestAssuredMockMvc.given()
