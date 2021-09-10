@@ -19,7 +19,7 @@ public class CustomerResourceDataMongoTest extends EmbeddedMongoDatabaseSeed {
     @Autowired
     private CustomerRepository repository;
 
-    private final String testId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
+    private final String customerId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
     @Test
     void findAll() {
@@ -29,23 +29,23 @@ public class CustomerResourceDataMongoTest extends EmbeddedMongoDatabaseSeed {
 
     @Test
     void findById() {
-        assertTrue(this.repository.existsById(this.testId));
-        assertTrue(this.repository.findById(this.testId).isPresent());
+        assertTrue(this.repository.existsById(this.customerId));
+        assertTrue(this.repository.findById(this.customerId).isPresent());
     }
 
     @Test
     void updateCustomer() {
-        CustomerDocument c = this.repository.findById(this.testId).get();
+        CustomerDocument c = this.repository.findById(this.customerId).get();
         c.setName("Bilbo");
         this.repository.save(c);
-        c = this.repository.findById(this.testId).get();
+        c = this.repository.findById(this.customerId).get();
         Assertions.assertNotEquals("Aragorn", c.getName());
         Assertions.assertEquals("Bilbo", c.getName());
     }
 
     @Test
     void deleteById() {
-        this.repository.deleteById(this.testId);
+        this.repository.deleteById(this.customerId);
         assertEquals(4, this.repository.count());
     }
 

@@ -31,7 +31,7 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
     @LocalServerPort
     private int port;
 
-    private final String testId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
+    private final String customerId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
     @BeforeEach
     void beforeEachInitRestAssuredConfig() {
@@ -60,7 +60,7 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .get("customer/" + this.testId)
+                .get("customer/" + this.customerId)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("name", equalTo("Aragorn"));
@@ -92,11 +92,11 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
                 .accept(ContentType.JSON)
                 .when()
                 .body(c)
-                .put("customer/" + this.testId)
+                .put("customer/" + this.customerId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value())
                 .header(HttpHeaders.CONTENT_LOCATION,
-                        equalTo("/api/v1/customer/" + this.testId));
+                        equalTo("/api/v1/customer/" + this.customerId));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .delete("customer/" + this.testId)
+                .delete("customer/" + this.customerId)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
 
@@ -113,7 +113,7 @@ public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()
-                .get("customer/" + this.testId)
+                .get("customer/" + this.customerId)
                 .then()
                 .statusCode(HttpStatus.NOT_FOUND.value());
 

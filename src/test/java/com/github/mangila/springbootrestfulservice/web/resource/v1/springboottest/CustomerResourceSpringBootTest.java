@@ -3,10 +3,8 @@ package com.github.mangila.springbootrestfulservice.web.resource.v1.springbootte
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
-import org.junit.jupiter.api.AfterEach;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -20,9 +18,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpHeaders.CONTENT_LOCATION;
@@ -31,7 +26,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Tag("springboot")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomerResourceSpringBootTest {
+public class CustomerResourceSpringBootTest extends EmbeddedMongoDatabaseSeed {
 
     @LocalServerPort
     private int port;
@@ -39,59 +34,38 @@ public class CustomerResourceSpringBootTest {
     @Autowired
     private TestRestTemplate http;
 
-    @Autowired
-    private CustomerRepository repository;
+    private final String customerId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
-    private String customerUrl;
-
-    private final List<String> validCustomerIds = new ArrayList<>();
+    private String customerURL;
 
     @BeforeEach
-    void beforeEach() {
-        this.customerUrl = "http://localhost:" + port + "/api/v1/customer/";
-        Stream.of("Idun", "Heimdall", "Magne", "Mode")
-                .forEach(name -> {
-                    CustomerDocument c = new CustomerDocument();
-                    c.setName(name);
-                    c.setRegistration(LocalDate.of(
-                            ThreadLocalRandom.current().nextInt(2010, 2020),
-                            ThreadLocalRandom.current().nextInt(1, 12),
-                            ThreadLocalRandom.current().nextInt(1, 28)
-                    ));
-                    c.setOrderHistory(new ArrayList<>());
-                    String id = this.repository.insert(c).getId();
-                    this.validCustomerIds.add(id);
-                });
-    }
-
-    @AfterEach
-    void afterEach() {
-        this.repository.deleteAll();
+    void beforeEachSetCustomerURL() {
+        this.customerURL = "http://localhost:" + port + "/api/v1/customer/";
     }
 
     @Test
     void findAll() {
-        ResponseEntity<CustomerDto[]> response = this.http.getForEntity(this.customerUrl, CustomerDto[].class);
+        ResponseEntity<CustomerDto[]> response = this.http.getForEntity(this.customerURL, CustomerDto[].class);
         assertEquals(OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(4, response.getBody().length);
+        assertEquals(5, response.getBody().length);
     }
 
     @Test
     void findById() {
-        String url = this.customerUrl + this.validCustomerIds.get(0);
+        String url = this.customerURL + this.customerId;
         ResponseEntity<CustomerDto> response = this.http.getForEntity(url, CustomerDto.class);
         assertEquals(OK, response.getStatusCode());
         assertNotNull(response.getBody());
         CustomerDto customerDto = response.getBody();
-        assertEquals("Idun", customerDto.getName());
+        assertEquals("Aragorn", customerDto.getName());
     }
 
     @Test
     void insert() {
         CustomerDto c = new CustomerDto();
-        c.setName("Tyr");
-        ResponseEntity<String> response = this.http.postForEntity(this.customerUrl, c, String.class);
+        c.setName("Saruman");
+        ResponseEntity<String> response = this.http.postForEntity(this.customerURL, c, String.class);
         assertEquals(CREATED, response.getStatusCode());
         assertTrue(response.getHeaders().containsKey(LOCATION));
     }
@@ -99,7 +73,7 @@ public class CustomerResourceSpringBootTest {
     @Test
     void insertAndThrowValidationErrors() throws JsonProcessingException {
         CustomerDto c = new CustomerDto();
-        ResponseEntity<String> response = this.http.postForEntity(this.customerUrl, c, String.class);
+        ResponseEntity<String> response = this.http.postForEntity(this.customerURL, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         ObjectMapper mapper = new ObjectMapper();
@@ -111,7 +85,7 @@ public class CustomerResourceSpringBootTest {
         c.setRegistration(LocalDate.now());
         c.setName("Al");
         c.setOrderHistory(new ArrayList<>());
-        response = this.http.postForEntity(this.customerUrl, c, String.class);
+        response = this.http.postForEntity(this.customerURL, c, String.class);
         assertEquals(BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
 
@@ -128,15 +102,15 @@ public class CustomerResourceSpringBootTest {
 
     @Test
     void updateCustomer() {
-        String url = this.customerUrl + this.validCustomerIds.get(0);
+        String url = this.customerURL + this.customerId;
         ResponseEntity<CustomerDto> getResponse = this.http.getForEntity(url, CustomerDto.class);
         assertEquals(OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
         CustomerDto c = getResponse.getBody();
-        assertEquals("Idun", c.getName());
+        assertEquals("Aragorn", c.getName());
 
         c = new CustomerDto();
-        c.setName("Brage");
+        c.setName("Gollum");
         HttpEntity<CustomerDto> httpEntity = new HttpEntity<>(c, null);
         ResponseEntity<String> putResponse = this.http.exchange(url, HttpMethod.PUT, httpEntity, String.class);
         assertEquals(NO_CONTENT, putResponse.getStatusCode());
@@ -146,12 +120,12 @@ public class CustomerResourceSpringBootTest {
         assertEquals(OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
         c = getResponse.getBody();
-        assertEquals("Brage", c.getName());
+        assertEquals("Gollum", c.getName());
     }
 
     @Test
     void deleteById() {
-        String url = this.customerUrl + this.validCustomerIds.get(0);
+        String url = this.customerURL + this.customerId;
         ResponseEntity<String> deleteResponse = this.http.exchange(url, HttpMethod.DELETE, null, String.class);
         assertEquals(NO_CONTENT, deleteResponse.getStatusCode());
 

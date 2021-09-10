@@ -17,7 +17,7 @@ public class OrderResourceDataMongoTest extends EmbeddedMongoDatabaseSeed {
     @Autowired
     private OrderRepository repository;
 
-    private final String testId = "2cdf9886-f565-4d5f-8bbc-2561806b2052";
+    private final String orderId = "2cdf9886-f565-4d5f-8bbc-2561806b2052";
 
     @Test
     void findAll() {
@@ -27,13 +27,13 @@ public class OrderResourceDataMongoTest extends EmbeddedMongoDatabaseSeed {
 
     @Test
     void findById() {
-        assertTrue(this.repository.existsById(this.testId));
-        assertTrue(this.repository.findById(this.testId).isPresent());
+        assertTrue(this.repository.existsById(this.orderId));
+        assertTrue(this.repository.findById(this.orderId).isPresent());
     }
 
     @Test
     void deleteById() {
-        this.repository.deleteById(this.testId);
+        this.repository.deleteById(this.orderId);
         assertEquals(10, this.repository.count());
         assertEquals(10, this.repository.findAll().size());
     }
