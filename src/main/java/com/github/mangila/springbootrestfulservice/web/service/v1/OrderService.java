@@ -30,8 +30,10 @@ public class OrderService {
         return this.mapper.toDto(this.repository.findAll());
     }
 
-    public OrderDto findById(String id) {
-        final OrderDocument c = this.repository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    public OrderDto findById(String id) throws ResourceNotFoundException {
+        final OrderDocument c = this.repository.findById(id).orElseThrow(() -> {
+            throw new ResourceNotFoundException(id);
+        });
         return this.mapper.toDto(c);
     }
 
@@ -48,7 +50,7 @@ public class OrderService {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(id);
         }
     }
 }
