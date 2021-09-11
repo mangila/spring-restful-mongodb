@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.List;
 
 @Component
-public abstract class EmbeddedMongoDatabaseSeed {
+public abstract class SeededEmbeddedMongo {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -32,11 +32,13 @@ public abstract class EmbeddedMongoDatabaseSeed {
                 .registerModule(new JavaTimeModule());
         URL url = DatabaseSeeder.class.getResource("/customer-dev-schema.json");
         var customers = mapper
-                .readValue(url, new TypeReference<List<CustomerDocument>>() {});
+                .readValue(url, new TypeReference<List<CustomerDocument>>() {
+                });
         this.customerRepository.insert(customers);
         url = DatabaseSeeder.class.getResource("/order-dev-schema.json");
         var orders = mapper
-                .readValue(url, new TypeReference<List<OrderDocument>>() {});
+                .readValue(url, new TypeReference<List<OrderDocument>>() {
+                });
         this.orderRepository.insert(orders);
     }
 

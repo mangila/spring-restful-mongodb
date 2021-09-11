@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  */
 @Tag("restassured")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomerResourceRestAssuredTest extends EmbeddedMongoDatabaseSeed {
+public class CustomerResourceRestAssuredTest extends SeededEmbeddedMongo {
 
     @LocalServerPort
     private int port;

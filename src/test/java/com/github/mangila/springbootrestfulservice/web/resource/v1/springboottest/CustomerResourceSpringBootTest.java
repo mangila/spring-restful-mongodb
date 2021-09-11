@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.resource.v1.EmbeddedMongoDatabaseSeed;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Tag("springboot")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomerResourceSpringBootTest extends EmbeddedMongoDatabaseSeed {
+public class CustomerResourceSpringBootTest extends SeededEmbeddedMongo {
 
     @LocalServerPort
     private int port;
