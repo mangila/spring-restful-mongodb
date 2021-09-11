@@ -1,6 +1,6 @@
 [
   {
-    "id": "c8127464-3559-45ca-a70e-51f9c3a6d1c0",
+    "_id": "c8127464-3559-45ca-a70e-51f9c3a6d1c0",
     "name": "Aragorn",
     "registration": "2019-04-02",
     "orderHistory": [
@@ -10,7 +10,7 @@
     ]
   },
   {
-    "id": "799e82fe-baa6-483e-94a1-6f718783ab94",
+    "_id": "799e82fe-baa6-483e-94a1-6f718783ab94",
     "name": "Legolas",
     "registration": "2018-07-16",
     "orderHistory": [
@@ -20,7 +20,7 @@
     ]
   },
   {
-    "id": "a7d4cd5e-70eb-4ef8-9249-99a7eb7c7347",
+    "_id": "a7d4cd5e-70eb-4ef8-9249-99a7eb7c7347",
     "name": "Gimli",
     "registration": "2016-08-22",
     "orderHistory": [
@@ -29,7 +29,7 @@
     ]
   },
   {
-    "id": "18619ca9-23dc-4ee2-b290-13209874977f",
+    "_id": "18619ca9-23dc-4ee2-b290-13209874977f",
     "name": "Frodo",
     "registration": "2015-07-07",
     "orderHistory": [
@@ -38,7 +38,7 @@
     ]
   },
   {
-    "id": "3ac050c9-9122-445d-920b-07e0a29ea115",
+    "_id": "3ac050c9-9122-445d-920b-07e0a29ea115",
     "name": "Sam",
     "registration": "2013-02-18",
     "orderHistory": [

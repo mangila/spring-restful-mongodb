@@ -1,6 +1,6 @@
 [
   {
-    "id": "2cdf9886-f565-4d5f-8bbc-2561806b2052",
+    "_id": "2cdf9886-f565-4d5f-8bbc-2561806b2052",
     "products": [
       "Milk",
       "Creme Fraiche",
@@ -13,7 +13,7 @@
     }
   },
   {
-    "id": "8e045821-2853-48d3-86c1-afcba912f009",
+    "_id": "8e045821-2853-48d3-86c1-afcba912f009",
     "products": [
       "Shoes",
       "Broadsword"
@@ -25,7 +25,7 @@
     }
   },
   {
-    "id": "70ff892d-db55-4ee8-8045-349f81abfeba",
+    "_id": "70ff892d-db55-4ee8-8045-349f81abfeba",
     "products": [
       "Air condition",
       "Soap",
@@ -38,7 +38,7 @@
     }
   },
   {
-    "id": "6492825d-797c-4257-aec5-334573b633e0",
+    "_id": "6492825d-797c-4257-aec5-334573b633e0",
     "products": [
       "Bow",
       "Arrow"
@@ -50,7 +50,7 @@
     }
   },
   {
-    "id": "e09af19f-5ab8-43f6-aa4a-a2f630c2c892",
+    "_id": "e09af19f-5ab8-43f6-aa4a-a2f630c2c892",
     "products": [
       "Lembas"
     ],
@@ -61,7 +61,7 @@
     }
   },
   {
-    "id": "682d67d6-7350-4085-97c4-c670deeec4a8",
+    "_id": "682d67d6-7350-4085-97c4-c670deeec4a8",
     "products": [
       "Dagger"
     ],
@@ -72,7 +72,7 @@
     }
   },
   {
-    "id": "4cb7a6e3-a110-426f-b6f3-2212e840b005",
+    "_id": "4cb7a6e3-a110-426f-b6f3-2212e840b005",
     "products": [
       "Axe"
     ],
@@ -83,7 +83,7 @@
     }
   },
   {
-    "id": "49527561-7a61-4263-9f9e-adf3b57f85c6",
+    "_id": "49527561-7a61-4263-9f9e-adf3b57f85c6",
     "products": [
       "Mithril"
     ],
@@ -94,7 +94,7 @@
     }
   },
   {
-    "id": "3fef4709-cca4-453f-8d1e-5a418aad6ced",
+    "_id": "3fef4709-cca4-453f-8d1e-5a418aad6ced",
     "products": [
       "Tomatoes",
       "The One Ring"
@@ -106,7 +106,7 @@
     }
   },
   {
-    "id": "6146b0f4-1050-4a0f-984d-49103c483322",
+    "_id": "6146b0f4-1050-4a0f-984d-49103c483322",
     "products": [
       "Sting"
     ],
@@ -117,7 +117,7 @@
     }
   },
   {
-    "id": "d7f60b21-0d94-4c0e-b96b-04f969919dc4",
+    "_id": "d7f60b21-0d94-4c0e-b96b-04f969919dc4",
     "products": [
       "Frying Pan",
       "Lembas"
