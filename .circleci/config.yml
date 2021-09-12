@@ -3,8 +3,15 @@ version: 2.1
 orbs:
   maven: circleci/maven@1.2.0
 
+jobs:
+  build:
+    docker:
+      -
+    steps:
+      - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
+
 workflows:
   maven_test:
     jobs:
-      - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
+      - build
       - maven/test
