@@ -4,6 +4,7 @@ version: 2.1
 
 executors:
   j11:
+    machine:
     docker:
       - image: cimg/openjdk:11
 
