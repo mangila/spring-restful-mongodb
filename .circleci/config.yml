@@ -6,5 +6,5 @@ orbs:
 workflows:
   maven_test:
     jobs:
-      - echo "testcontainers.reuse.enable=true" >> testcontainers.properties
+      - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
       - maven/test
