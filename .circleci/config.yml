@@ -6,7 +6,7 @@ orbs:
 jobs:
   build:
     docker:
-      -
+      - name: orbs
     steps:
       - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
