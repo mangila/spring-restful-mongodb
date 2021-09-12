@@ -5,6 +5,7 @@ import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbedde
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,12 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDate;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * given() — specifies the HTTP request details
@@ -83,11 +85,33 @@ public class CustomerResourceRestAssuredTest extends SeededEmbeddedMongo {
     }
 
     @Test
+    void insertAndThrowValidationError() {
+        CustomerDto c = new CustomerDto();
+        c.setName("Gandalf the Grey");
+        c.setId("uuid");
+        c.setRegistration(LocalDate.now());
+        c.setOrderHistory(Lists.emptyList());
+
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .body(c)
+                .post("customer")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("orderHistory", equalTo("must be null"))
+                .body("registration", equalTo("must be null"))
+                .body("id", equalTo("must be null"));
+
+    }
+
+    @Test
     void update() {
         CustomerDto c = new CustomerDto();
         c.setName("Tom Bombadil");
 
-       given()
+        given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)
                 .when()

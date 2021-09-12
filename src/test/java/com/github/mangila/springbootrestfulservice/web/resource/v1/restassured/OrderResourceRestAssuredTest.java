@@ -93,6 +93,28 @@ public class OrderResourceRestAssuredTest extends SeededEmbeddedMongo {
     }
 
     @Test
+    void insertAndThrowValidationError() {
+        OrderDto o = new OrderDto();
+        o.setId("uuid");
+        o.setAmount(-700);
+        o.setProducts(null);
+        o.setAddress(null);
+
+        given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .body(o)
+                .post("order/" + this.customerId)
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("amount", equalTo("must be greater than 0"))
+                .body("address", equalTo("must not be null"))
+                .body("id", equalTo("must be null"))
+                .body("products", equalTo("must not be null"));
+    }
+
+    @Test
     void delete() {
         given()
                 .contentType(ContentType.JSON)
