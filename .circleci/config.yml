@@ -1,7 +1,8 @@
-version: 2
-machine: true
+version: 2.1
 jobs:
   build:
+    machine:
+      docker_layer_caching: true
     steps:
       - checkout
       - run: mvn -B clean install
