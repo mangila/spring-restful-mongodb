@@ -19,3 +19,4 @@ workflows:
     jobs:
       - maven/test:
           executor: j11
+      - my_job
