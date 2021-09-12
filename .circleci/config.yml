@@ -5,4 +5,4 @@ jobs:
       image: ubuntu-1604:202007-01
     steps:
       - checkout
-      - run: mvn -B clean install
+      - run: mvn clean test
