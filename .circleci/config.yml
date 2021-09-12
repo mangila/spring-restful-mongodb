@@ -7,6 +7,9 @@ jobs:
   my_job:
     docker:
       - image: j11
+        auth:
+          username: mangila
+          password: $DOCKERHUB_PASSWORD
     steps:
       - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
