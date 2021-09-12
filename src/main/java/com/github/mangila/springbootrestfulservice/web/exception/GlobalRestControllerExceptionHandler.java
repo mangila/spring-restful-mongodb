@@ -38,7 +38,7 @@ public class GlobalRestControllerExceptionHandler {
     @ApiResponse(
             responseCode = "404",
             description = "The requested resource id was not found.")
-    public ResponseEntity<Map<String, String>> handleResourceNotFound(RuntimeException ex) throws JsonProcessingException {
+    public ResponseEntity<Map<String, String>> handleResourceNotFound(RuntimeException ex) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         return new ResponseEntity<>(Map.of("id", ex.getMessage()), headers, HttpStatus.NOT_FOUND);
