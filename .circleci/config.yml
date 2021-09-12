@@ -1,12 +1,10 @@
-#
-
 executors:
-j11:
-  docker:
-    - image: cimg/openjdk:11
-    - steps:
-        - checkout
-        - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
+  j11:
+    docker:
+      - image: cimg/openjdk:11
+      - steps:
+          - checkout
+          - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
 orbs:
   maven: circleci/maven@1.2.0
