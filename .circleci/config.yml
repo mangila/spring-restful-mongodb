@@ -5,10 +5,10 @@ jdk11:
   docker:
     - image: 'adoptopenjdk/openjdk11:alpine-jre'
     - steps:
-        - checkout
         - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
+
 orbs:
-  maven: circleci/maven@1.1
+  maven: circleci/maven@1.2.0
 version: 2.1
 workflows:
   maven_test:
