@@ -1,10 +1,11 @@
 #
 
 executors:
-jdk11:
+j11:
   docker:
-    - image: 'adoptopenjdk/openjdk11:alpine-jre'
+    - image: cimg/openjdk:11
     - steps:
+        - checkout
         - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
 orbs:
@@ -14,4 +15,4 @@ workflows:
   maven_test:
     jobs:
       - maven/test:
-          executor: jdk11
+          executor: j11
