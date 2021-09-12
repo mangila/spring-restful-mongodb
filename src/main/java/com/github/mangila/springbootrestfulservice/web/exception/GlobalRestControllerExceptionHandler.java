@@ -1,9 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +20,9 @@ public class GlobalRestControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ApiResponse(
+            responseCode = "400",
+            description = "Returns a json object of validation field errors.")
     public ResponseEntity<Map<String, String>> handleValidationErrorFound(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -34,14 +35,13 @@ public class GlobalRestControllerExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<String> handleResourceNotFound(RuntimeException ex) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode node = mapper.createObjectNode();
-        node.put("id", ex.getMessage());
-        String json = mapper.writeValueAsString(node);
+    @ApiResponse(
+            responseCode = "404",
+            description = "The requested resource id was not found.")
+    public ResponseEntity<Map<String, String>> handleResourceNotFound(RuntimeException ex) throws JsonProcessingException {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        return new ResponseEntity<>(json, headers, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Map.of("id", ex.getMessage()), headers, HttpStatus.NOT_FOUND);
     }
 
 }
