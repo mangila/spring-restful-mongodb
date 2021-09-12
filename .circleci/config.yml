@@ -5,4 +5,5 @@ jobs:
       image: ubuntu-2004:202107-02
     steps:
       - checkout
+      - run: echo 'testcontainers.reuse.enable=true' >> /home/circleci/.testcontainers.properties
       - run: mvn clean test

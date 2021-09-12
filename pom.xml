@@ -149,8 +149,11 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <systemPropertyVariables>
+                        <testEnvironment>true</testEnvironment>
+                    </systemPropertyVariables>
                     <argLine>-Dspring.profiles.active=test</argLine>
                 </configuration>
             </plugin>
