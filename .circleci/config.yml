@@ -4,20 +4,11 @@ version: 2.1
 
 executors:
   j11:
-    machine:
     docker:
       - image: cimg/openjdk:11
-
-jobs:
-  my_job:
-    docker:
-      - image: j11
-    steps:
-      - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
 workflows:
   maven_test:
     jobs:
       - maven/test:
           executor: j11
-      - my_job
