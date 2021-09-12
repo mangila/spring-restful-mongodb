@@ -1,22 +1,7 @@
 orbs:
   maven: circleci/maven@1.2.0
 version: 2.1
-
-executors:
-  j11:
-    docker:
-      - image: cimg/openjdk:11.0
-
-jobs:
-  my_job:
-    docker:
-      - image: j11
-    steps:
-      - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
-
 workflows:
   maven_test:
     jobs:
-      - maven/test:
-          executor: j11
-      - my_job
+      - maven/test
