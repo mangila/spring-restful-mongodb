@@ -1,7 +1,7 @@
-orbs:
-  maven: circleci/maven@1.2.0
 version: 2.1
-workflows:
-  maven_test:
-    jobs:
-      - maven/test
+machine: true
+jobs:
+  build:
+    steps:
+      - checkout
+      - run: mvn -B clean install
