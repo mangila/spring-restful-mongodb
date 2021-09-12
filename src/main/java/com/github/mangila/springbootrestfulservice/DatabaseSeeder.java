@@ -8,6 +8,7 @@ import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -20,7 +21,7 @@ import java.util.List;
 @Component
 @Profile("dev")
 @Slf4j
-public class DatabaseSeeder implements InitializingBean {
+public class DatabaseSeeder implements InitializingBean, DisposableBean {
 
     private final CustomerRepository customerRepository;
 
@@ -38,12 +39,20 @@ public class DatabaseSeeder implements InitializingBean {
                 .registerModule(new JavaTimeModule());
         URL url = DatabaseSeeder.class.getResource("/customer-dev-schema.json");
         var customers = mapper
-                .readValue(url, new TypeReference<List<CustomerDocument>>() {});
+                .readValue(url, new TypeReference<List<CustomerDocument>>() {
+                });
         this.customerRepository.insert(customers);
         url = DatabaseSeeder.class.getResource("/order-dev-schema.json");
         var orders = mapper
-                .readValue(url, new TypeReference<List<OrderDocument>>() {});
+                .readValue(url, new TypeReference<List<OrderDocument>>() {
+                });
         this.orderRepository.insert(orders);
         log.info("Database seeded with dev data.");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        this.customerRepository.deleteAll();
+        this.orderRepository.deleteAll();
     }
 }

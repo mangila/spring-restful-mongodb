@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.mangila</groupId>
     <artifactId>spring-boot-restful-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>spring-boot-restful-service</name>
     <description>Spring Boot RESTful service</description>
     <properties>
@@ -132,6 +132,7 @@
     </dependencies>
 
     <build>
+        <finalName>api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
