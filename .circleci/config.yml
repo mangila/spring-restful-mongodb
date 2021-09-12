@@ -4,6 +4,7 @@ orbs:
   maven: circleci/maven@1.2.0
 
 workflows:
+  -run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
   maven_test:
     jobs:
       - maven/test
