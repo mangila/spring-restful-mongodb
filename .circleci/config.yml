@@ -1,12 +1,9 @@
 version: 2.1
 
-orbs:
-  maven: circleci/maven@1.2.0
-
 jobs:
   build:
     docker:
-      - name: orbs
+      - image: circleci/maven@1.2.0
     steps:
       - run: echo "testcontainers.reuse.enable=true" >> testcontainers.properties
 
