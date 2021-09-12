@@ -25,7 +25,8 @@ public abstract class SeededMongoDBTestContainer {
                             "/tmp/order-test-mongoimport-schema.json",
                             BindMode.READ_ONLY
                     )
-                    .withReuse(true);
+                    .withReuse(true); // 'testcontainers.reuse.enable=true' needs to be set
+                                      // - if you are running on your local machine
 
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
