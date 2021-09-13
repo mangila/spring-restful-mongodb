@@ -16,7 +16,7 @@ When running the application of course :P
 # Environment stuffs
 ## Testcontainers
 * The testcontainers.properties file must be modifed with the flag ``testcontainers.reuse.enable=true`` on your local machine.
-## Run the "dev environment"
+## Run the "dev" environment
 If you have a local installation or something running on port 27017 just make the application-dev.properties file point at your local mongodb. Else do this
 * Start the mongo container ``docker-compose -f docker-compose.dev.yml up -d``
 * Start the application with 'dev' spring profile active. From your IDEA.
