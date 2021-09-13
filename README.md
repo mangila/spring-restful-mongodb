@@ -26,3 +26,4 @@ If you have a local installation or something running on port 27017 just make th
 * Build the .jar file ``mvn clean package``
 * Build the docker image. ``docker build -t mangilaspringbootrestfulservice .``
 * Start docker compose ``docker-compose up -d``
+* The poor man's production environments should be up and running :P 
