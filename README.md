@@ -19,7 +19,7 @@ When running the application of course :P
 ## Run the "dev environment"
 If you have a local installation or something running on port 27017 just make the application-dev.properties file point at your local mongodb. Else do this
 * Start the mongo container ``docker-compose -f docker-compose.dev.yml up -d``
-* Start the application with 'dev' profile active. From your IDEA.
+* Start the application with 'dev' spring profile active. From your IDEA.
 
 ## Run the "prod" environment
 * Build the .jar file ``mvn clean package``
