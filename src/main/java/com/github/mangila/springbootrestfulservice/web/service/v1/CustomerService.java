@@ -6,12 +6,12 @@ import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.CustomerMapper;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 
 @Service
 public class CustomerService {
@@ -29,9 +29,9 @@ public class CustomerService {
         return this.mapper.toDto(this.repository.findAll());
     }
 
-    public CustomerDto findById(final String id) throws ResourceNotFoundException {
+    public CustomerDto findById(final String id) throws MissingResourceException {
         final CustomerDocument c = this.repository.findById(id).orElseThrow(() -> {
-            throw new ResourceNotFoundException(id);
+            throw new MissingResourceException("Not Found", CustomerDto.class.getName(), id);
         });
         return this.mapper.toDto(c);
     }
@@ -43,11 +43,11 @@ public class CustomerService {
         return this.repository.insert(c).getId();
     }
 
-    public void deleteById(String id) throws ResourceNotFoundException {
+    public void deleteById(String id) throws MissingResourceException {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException(id);
+            throw new MissingResourceException("Not Found", CustomerDto.class.getName(), id);
         }
     }
 

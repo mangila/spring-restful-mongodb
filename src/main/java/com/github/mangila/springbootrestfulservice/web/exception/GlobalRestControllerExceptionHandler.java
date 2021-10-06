@@ -1,7 +1,6 @@
 package com.github.mangila.springbootrestfulservice.web.exception;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.MissingResourceException;
 
 @RestControllerAdvice
 public class GlobalRestControllerExceptionHandler {
@@ -33,7 +33,7 @@ public class GlobalRestControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(MissingResourceException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ApiResponse(
             responseCode = "404",
