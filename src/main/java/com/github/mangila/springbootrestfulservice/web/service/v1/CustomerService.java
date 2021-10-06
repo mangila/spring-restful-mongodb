@@ -3,10 +3,10 @@ package com.github.mangila.springbootrestfulservice.web.service.v1;
 
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.CustomerMapper;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

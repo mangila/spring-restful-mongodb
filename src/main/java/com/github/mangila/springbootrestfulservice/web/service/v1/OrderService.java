@@ -4,10 +4,10 @@ package com.github.mangila.springbootrestfulservice.web.service.v1;
 import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
-import com.github.mangila.springbootrestfulservice.web.exception.ResourceNotFoundException;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.OrderMapper;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
