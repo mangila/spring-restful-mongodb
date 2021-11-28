@@ -20,7 +20,6 @@ import java.util.List;
 
 @Component
 @Profile("dev")
-@Slf4j
 public class DatabaseSeeder implements InitializingBean, DisposableBean {
 
     private final CustomerRepository customerRepository;
@@ -47,7 +46,6 @@ public class DatabaseSeeder implements InitializingBean, DisposableBean {
                 .readValue(url, new TypeReference<List<OrderDocument>>() {
                 });
         this.orderRepository.insert(orders);
-        log.info("Database seeded with dev data.");
     }
 
     @Override
