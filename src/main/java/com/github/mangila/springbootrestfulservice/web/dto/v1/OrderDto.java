@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class OrderDto {
+public class OrderDto implements Serializable {
 
     @Null
     private String id;

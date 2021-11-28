@@ -4,3 +4,7 @@ services:
     image: mongo:5.0.2
     ports:
       - "27017:27017"
+  redis:
+    image: redis:6.2.0-alpine
+    ports:
+      - "6379:6379"

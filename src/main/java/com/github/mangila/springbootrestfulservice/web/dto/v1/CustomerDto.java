@@ -7,12 +7,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class CustomerDto {
+public class CustomerDto implements Serializable {
 
     @Null
     private String id;
