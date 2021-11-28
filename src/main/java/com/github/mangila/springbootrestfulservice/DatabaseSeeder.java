@@ -2,12 +2,10 @@ package com.github.mangila.springbootrestfulservice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +24,17 @@ public class DatabaseSeeder implements InitializingBean, DisposableBean {
 
     private final OrderRepository orderRepository;
 
+    private final ObjectMapper mapper;
+
     @Autowired
-    public DatabaseSeeder(CustomerRepository customerRepository, OrderRepository orderRepository) {
+    public DatabaseSeeder(CustomerRepository customerRepository, OrderRepository orderRepository, ObjectMapper mapper) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
+        this.mapper = mapper;
     }
 
     @Override
     public void afterPropertiesSet() throws IOException {
-        ObjectMapper mapper = new ObjectMapper()
-                .registerModule(new JavaTimeModule());
         URL url = DatabaseSeeder.class.getResource("/customer-dev-schema.json");
         var customers = mapper
                 .readValue(url, new TypeReference<List<CustomerDocument>>() {

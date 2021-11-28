@@ -6,6 +6,7 @@ import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.mapstruct.CustomerMapper;
 import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.MissingResourceException;
 
 @Service
+@CacheConfig(cacheNames = {"customer"})
 public class CustomerService {
 
     private final CustomerRepository repository;
@@ -29,6 +31,7 @@ public class CustomerService {
         return this.mapper.toDto(this.repository.findAll());
     }
 
+    @Cacheable(key = "#id")
     public CustomerDto findById(final String id) throws MissingResourceException {
         final CustomerDocument c = this.repository.findById(id).orElseThrow(() -> {
             throw new MissingResourceException("Not Found", CustomerDto.class.getName(), id);
@@ -43,6 +46,7 @@ public class CustomerService {
         return this.repository.insert(c).getId();
     }
 
+    @CacheEvict(allEntries = true)
     public void deleteById(String id) throws MissingResourceException {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
@@ -51,6 +55,8 @@ public class CustomerService {
         }
     }
 
+
+    @CacheEvict(key = "#result")
     public String update(String id, CustomerDto customerDto) {
         if (this.repository.existsById(id)) {
             customerDto.setId(id);

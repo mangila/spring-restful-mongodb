@@ -6,11 +6,14 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -35,12 +38,22 @@ public class CustomerResourceRestAssuredTest extends SeededEmbeddedMongo {
 
     private final String customerId = "c8127464-3559-45ca-a70e-51f9c3a6d1c0";
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     void beforeEachInitRestAssuredConfig() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = this.port;
         RestAssured.basePath = "/api/v1";
     }
+
+    @AfterEach
+    void afterEachClearCache() {
+        this.cacheManager.getCacheNames()
+                .forEach(c -> cacheManager.getCache(c).clear());
+    }
+
 
     @Test
     void findAll() {

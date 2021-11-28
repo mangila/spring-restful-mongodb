@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +40,18 @@ public class CustomerResourceSpringBootTest extends SeededEmbeddedMongo {
 
     private String customerURL;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     void beforeEachSetCustomerURL() {
         this.customerURL = "http://localhost:" + port + "/api/v1/customer/";
+    }
+
+    @AfterEach
+    void afterEachClearCache() {
+        this.cacheManager.getCacheNames()
+                .forEach(c -> cacheManager.getCache(c).clear());
     }
 
     @Test

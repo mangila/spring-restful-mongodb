@@ -56,7 +56,6 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
         <!-- JACKSON -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

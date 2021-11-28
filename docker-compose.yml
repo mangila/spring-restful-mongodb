@@ -6,6 +6,10 @@ services:
       - "27017:27017"
     volumes:
       - ~/mangilaspringbootrestfulservicemongodb:/data/db
+  redis:
+    image: redis:6.2.0-alpine
+    ports:
+      - "6379:6379"
   api:
     image: mangilaspringbootrestfulservice
     ports:
@@ -14,5 +18,7 @@ services:
       - "SPRING_PROFILES_ACTIVE=prod"
     links:
       - mongo
+      - redis
     depends_on:
       - mongo
+      - redis
