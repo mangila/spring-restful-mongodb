@@ -24,8 +24,8 @@ public class RedisConfig {
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
-        var jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(CustomerDto.class);
-        jackson2JsonRedisSerializer.setObjectMapper(mapper);
+        var jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(CustomerDto.class);
+        jackson2JsonRedisSerializer.setObjectMapper(this.mapper);
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofMinutes(60))
                 .disableCachingNullValues()

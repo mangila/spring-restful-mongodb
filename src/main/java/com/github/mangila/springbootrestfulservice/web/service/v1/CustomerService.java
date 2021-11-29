@@ -46,7 +46,7 @@ public class CustomerService {
         return this.repository.insert(c).getId();
     }
 
-    @CacheEvict(allEntries = true)
+    @CacheEvict(key = "#id")
     public void deleteById(String id) throws MissingResourceException {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
