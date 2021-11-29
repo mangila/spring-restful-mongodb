@@ -7,5 +7,5 @@ jobs:
     steps:
       - checkout
       - run: echo 'testcontainers.reuse.enable=true' >> /home/circleci/.testcontainers.properties
-      - run: sudo apt install redis -y
+      - run: sudo apt-get install redis -y
       - run: mvn clean test
