@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice;
+package com.github.mangila.springbootrestfulservice.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;

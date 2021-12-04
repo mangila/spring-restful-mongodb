@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice;
+package com.github.mangila.springbootrestfulservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
