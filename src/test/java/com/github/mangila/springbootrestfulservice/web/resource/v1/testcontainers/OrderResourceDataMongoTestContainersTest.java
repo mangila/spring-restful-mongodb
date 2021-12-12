@@ -1,8 +1,8 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.testcontainers;
 
-import com.github.mangila.springbootrestfulservice.domain.Address;
-import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
+import com.github.mangila.springbootrestfulservice.domain.v1.Address;
+import com.github.mangila.springbootrestfulservice.domain.v1.OrderDocument;
+import com.github.mangila.springbootrestfulservice.repository.OrderRepository;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

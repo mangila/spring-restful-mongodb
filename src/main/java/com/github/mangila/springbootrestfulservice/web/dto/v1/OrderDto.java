@@ -1,6 +1,6 @@
 package com.github.mangila.springbootrestfulservice.web.dto.v1;
 
-import com.github.mangila.springbootrestfulservice.domain.Address;
+import com.github.mangila.springbootrestfulservice.domain.v1.Address;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

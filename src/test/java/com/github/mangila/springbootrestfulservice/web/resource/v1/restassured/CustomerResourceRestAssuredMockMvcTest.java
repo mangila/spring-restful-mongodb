@@ -2,7 +2,7 @@ package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.CustomerResource;
-import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
+import com.github.mangila.springbootrestfulservice.service.CustomerService;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.restassured.module.mockmvc.response.MockMvcResponse;

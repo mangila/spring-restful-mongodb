@@ -1,9 +1,9 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
-import com.github.mangila.springbootrestfulservice.domain.Address;
+import com.github.mangila.springbootrestfulservice.domain.v1.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.OrderResource;
-import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
+import com.github.mangila.springbootrestfulservice.service.OrderService;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import io.restassured.module.mockmvc.response.MockMvcResponse;

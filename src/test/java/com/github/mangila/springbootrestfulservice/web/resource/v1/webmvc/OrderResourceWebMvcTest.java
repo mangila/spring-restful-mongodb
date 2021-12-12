@@ -1,10 +1,10 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.webmvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mangila.springbootrestfulservice.domain.Address;
+import com.github.mangila.springbootrestfulservice.domain.v1.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.OrderResource;
-import com.github.mangila.springbootrestfulservice.web.service.v1.OrderService;
+import com.github.mangila.springbootrestfulservice.service.OrderService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

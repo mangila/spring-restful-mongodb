@@ -1,4 +1,4 @@
-package com.github.mangila.springbootrestfulservice.domain;
+package com.github.mangila.springbootrestfulservice.domain.v1;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

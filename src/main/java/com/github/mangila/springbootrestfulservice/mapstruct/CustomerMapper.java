@@ -1,6 +1,6 @@
-package com.github.mangila.springbootrestfulservice.web.mapstruct;
+package com.github.mangila.springbootrestfulservice.mapstruct;
 
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.domain.v1.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
 import org.mapstruct.Mapper;
 

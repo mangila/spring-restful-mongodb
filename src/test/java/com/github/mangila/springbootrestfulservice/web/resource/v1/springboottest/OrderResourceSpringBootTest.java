@@ -3,7 +3,7 @@ package com.github.mangila.springbootrestfulservice.web.resource.v1.springbootte
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mangila.springbootrestfulservice.domain.Address;
+import com.github.mangila.springbootrestfulservice.domain.v1.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;

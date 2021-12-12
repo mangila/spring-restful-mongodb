@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.testcontainers;
 
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.domain.v1.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.repository.CustomerRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;

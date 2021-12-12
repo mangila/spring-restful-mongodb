@@ -1,11 +1,11 @@
-package com.github.mangila.springbootrestfulservice;
+package com.github.mangila.springbootrestfulservice.bootstrap;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderRepository;
+import com.github.mangila.springbootrestfulservice.domain.v1.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.domain.v1.OrderDocument;
+import com.github.mangila.springbootrestfulservice.repository.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.repository.OrderRepository;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

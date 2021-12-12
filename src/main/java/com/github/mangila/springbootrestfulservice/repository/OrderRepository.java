@@ -1,6 +1,6 @@
-package com.github.mangila.springbootrestfulservice.web.repository.v1;
+package com.github.mangila.springbootrestfulservice.repository;
 
-import com.github.mangila.springbootrestfulservice.domain.OrderDocument;
+import com.github.mangila.springbootrestfulservice.domain.v1.OrderDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.datamongo;
 
-import com.github.mangila.springbootrestfulservice.domain.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.web.repository.v1.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.domain.v1.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.repository.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;

@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1;
 
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
+import com.github.mangila.springbootrestfulservice.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
