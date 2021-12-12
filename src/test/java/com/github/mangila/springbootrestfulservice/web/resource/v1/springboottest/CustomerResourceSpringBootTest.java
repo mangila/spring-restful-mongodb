@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.HttpStatus.*;
 
 @Tag("springboot")
+@Import(RedisTestConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerResourceSpringBootTest extends SeededEmbeddedMongo {
 

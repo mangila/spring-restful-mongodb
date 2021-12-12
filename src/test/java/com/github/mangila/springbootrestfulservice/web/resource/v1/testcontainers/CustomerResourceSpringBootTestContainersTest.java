@@ -1,12 +1,14 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.testcontainers;
 
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.service.v1.CustomerService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 @Tag("testcontainers")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

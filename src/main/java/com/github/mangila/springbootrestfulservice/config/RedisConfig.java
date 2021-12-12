@@ -6,6 +6,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -14,6 +17,7 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
+@EnableRedisRepositories
 public class RedisConfig {
 
     private final ObjectMapper mapper;
@@ -31,5 +35,17 @@ public class RedisConfig {
                 .disableCachingNullValues()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
+    }
+
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+        return new LettuceConnectionFactory("localhost", 6379);
+    }
+
+    @Bean
+    public RedisTemplate<?, ?> redisTemplate(LettuceConnectionFactory connectionFactory) {
+        RedisTemplate<byte[], byte[]> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        return template;
     }
 }

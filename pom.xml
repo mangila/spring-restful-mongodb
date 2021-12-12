@@ -132,6 +132,12 @@
             <version>${flapdoodle.embed.mongo.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>it.ozimov</groupId>
+            <artifactId>embedded-redis</artifactId>
+            <version>0.7.3</version>
+            <scope>test</scope>
+        </dependency>
         <!-- END TEST -->
     </dependencies>
 

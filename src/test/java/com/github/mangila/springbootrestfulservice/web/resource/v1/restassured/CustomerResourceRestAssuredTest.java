@@ -1,6 +1,7 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
 import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.domain.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 

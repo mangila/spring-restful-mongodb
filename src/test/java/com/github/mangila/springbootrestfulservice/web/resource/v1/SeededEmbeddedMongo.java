@@ -12,7 +12,7 @@ import com.github.mangila.springbootrestfulservice.web.repository.v1.OrderReposi
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
