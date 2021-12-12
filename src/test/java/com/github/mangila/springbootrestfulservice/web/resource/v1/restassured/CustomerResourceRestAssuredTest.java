@@ -32,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * then() — validates the HTTP response
  */
 @Tag("restassured")
+@Import(RedisTestConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerResourceRestAssuredTest extends SeededEmbeddedMongo {
 

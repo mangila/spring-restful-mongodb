@@ -1,17 +1,23 @@
 package com.github.mangila.springbootrestfulservice.web.resource.v1.restassured;
 
+import com.github.mangila.springbootrestfulservice.config.RedisConfig;
 import com.github.mangila.springbootrestfulservice.domain.v1.Address;
 import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
+import com.github.mangila.springbootrestfulservice.web.resource.v1.RedisTestConfig;
 import com.github.mangila.springbootrestfulservice.web.resource.v1.SeededEmbeddedMongo;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
@@ -26,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * then() — validates the HTTP response
  */
 @Tag("restassured")
+@Import(RedisTestConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OrderResourceRestAssuredTest extends SeededEmbeddedMongo {
 
@@ -36,11 +43,20 @@ public class OrderResourceRestAssuredTest extends SeededEmbeddedMongo {
 
     private final String orderId = "2cdf9886-f565-4d5f-8bbc-2561806b2052";
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     void beforeEachInitRestAssuredConfig() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = this.port;
         RestAssured.basePath = "/api/v1";
+    }
+
+    @AfterEach
+    void afterEachClearCache() {
+        this.cacheManager.getCacheNames()
+                .forEach(c -> cacheManager.getCache(c).clear());
     }
 
     @Test

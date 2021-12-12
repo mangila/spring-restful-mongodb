@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = "com.github.mangila.springbootrestfulservice.repository")
+//@EnableMongoRepositories(basePackages = "com.github.mangila.springbootrestfulservice.repository")
 public class SpringBootRestfulServiceApplication {
 
 	public static void main(String[] args) {
