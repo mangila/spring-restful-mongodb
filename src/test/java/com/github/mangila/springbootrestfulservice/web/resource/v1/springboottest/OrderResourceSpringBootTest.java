@@ -24,6 +24,7 @@ import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.http.HttpStatus.*;
 
 @Tag("springboot")
+@Import(RedisTestConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OrderResourceSpringBootTest extends SeededEmbeddedMongo {
 
