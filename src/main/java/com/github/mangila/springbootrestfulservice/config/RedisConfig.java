@@ -17,7 +17,6 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
-@EnableRedisRepositories
 public class RedisConfig {
 
     private final ObjectMapper mapper;
