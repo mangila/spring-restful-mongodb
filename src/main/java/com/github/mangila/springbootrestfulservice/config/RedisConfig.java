@@ -1,7 +1,7 @@
 package com.github.mangila.springbootrestfulservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

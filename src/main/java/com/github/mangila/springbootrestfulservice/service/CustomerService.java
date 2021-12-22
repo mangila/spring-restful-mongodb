@@ -1,10 +1,10 @@
 package com.github.mangila.springbootrestfulservice.service;
 
 
-import com.github.mangila.springbootrestfulservice.domain.v1.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.mapstruct.CustomerMapper;
-import com.github.mangila.springbootrestfulservice.repository.CustomerRepository;
+import com.github.mangila.springbootrestfulservice.persistence.domain.CustomerDocument;
+import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
+import com.github.mangila.springbootrestfulservice.service.mapstruct.CustomerMapper;
+import com.github.mangila.springbootrestfulservice.persistence.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;

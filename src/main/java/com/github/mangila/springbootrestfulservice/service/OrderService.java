@@ -1,11 +1,11 @@
 package com.github.mangila.springbootrestfulservice.service;
 
 
-import com.github.mangila.springbootrestfulservice.domain.v1.OrderDocument;
-import com.github.mangila.springbootrestfulservice.web.dto.v1.CustomerDto;
-import com.github.mangila.springbootrestfulservice.web.dto.v1.OrderDto;
-import com.github.mangila.springbootrestfulservice.mapstruct.OrderMapper;
-import com.github.mangila.springbootrestfulservice.repository.OrderRepository;
+import com.github.mangila.springbootrestfulservice.persistence.domain.OrderDocument;
+import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
+import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
+import com.github.mangila.springbootrestfulservice.service.mapstruct.OrderMapper;
+import com.github.mangila.springbootrestfulservice.persistence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

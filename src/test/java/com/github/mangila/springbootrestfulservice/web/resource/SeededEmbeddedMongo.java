@@ -1,15 +1,17 @@
-package com.github.mangila.springbootrestfulservice.bootstrap;
+package com.github.mangila.springbootrestfulservice.web.resource;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.mangila.springbootrestfulservice.bootstrap.DatabaseSeeder;
 import com.github.mangila.springbootrestfulservice.persistence.domain.CustomerDocument;
 import com.github.mangila.springbootrestfulservice.persistence.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.persistence.repository.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.persistence.repository.OrderRepository;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,24 +19,19 @@ import java.net.URL;
 import java.util.List;
 
 @Component
-@Profile("dev")
-public class DatabaseSeeder implements InitializingBean, DisposableBean {
-
-    private final CustomerRepository customerRepository;
-
-    private final OrderRepository orderRepository;
-
-    private final ObjectMapper mapper;
+public abstract class SeededEmbeddedMongo {
 
     @Autowired
-    public DatabaseSeeder(CustomerRepository customerRepository, OrderRepository orderRepository, ObjectMapper mapper) {
-        this.customerRepository = customerRepository;
-        this.orderRepository = orderRepository;
-        this.mapper = mapper;
-    }
+    private CustomerRepository customerRepository;
 
-    @Override
-    public void afterPropertiesSet() throws IOException {
+    @Autowired
+    private OrderRepository orderRepository;
+
+    @BeforeEach
+    void beforeEach() throws IOException {
+        var mapper = new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .registerModule(new JavaTimeModule());
         URL url = DatabaseSeeder.class.getResource("/customer-dev-schema.json");
         var customers = mapper
                 .readValue(url, new TypeReference<List<CustomerDocument>>() {
@@ -47,9 +44,10 @@ public class DatabaseSeeder implements InitializingBean, DisposableBean {
         this.orderRepository.insert(orders);
     }
 
-    @Override
-    public void destroy() throws Exception {
+    @AfterEach
+    void afterEach() {
         this.customerRepository.deleteAll();
         this.orderRepository.deleteAll();
     }
+
 }
