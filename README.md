@@ -1,6 +1,4 @@
-[![CircleCI](https://circleci.com/gh/mangila/spring-boot-restful-service/tree/master.svg?style=svg)](https://circleci.com/gh/mangila/spring-boot-restful-service/tree/master)
-
-# spring-boot-restful-service
+# spring-restful-mongodb
 
 Spring Boot Java 11 RESTful service with aggregation and date relationship in the domain model. Following DTO
 architecture pattern and MVC with a service layer. A simple order/customer API with C.R.U.D operations. This repo is
