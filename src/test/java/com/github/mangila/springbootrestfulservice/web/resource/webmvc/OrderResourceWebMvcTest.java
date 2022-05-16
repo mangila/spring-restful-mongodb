@@ -2,9 +2,9 @@ package com.github.mangila.springbootrestfulservice.web.resource.webmvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.persistence.domain.Address;
+import com.github.mangila.springbootrestfulservice.service.OrderService;
 import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
 import com.github.mangila.springbootrestfulservice.web.resource.OrderResource;
-import com.github.mangila.springbootrestfulservice.service.OrderService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class OrderResourceWebMvcTest {
     void findAll() throws Exception {
         when(this.service.findAll()).thenReturn(Lists.newArrayList(new OrderDto()));
 
-        this.mockMvc.perform(get("/v1/order").accept(APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/v1/order").accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)));
@@ -47,7 +47,7 @@ class OrderResourceWebMvcTest {
         String uuid = UUID.randomUUID().toString();
         when(this.service.findById(uuid)).thenReturn(new OrderDto());
 
-        this.mockMvc.perform(get("/v1/order/" + uuid)
+        this.mockMvc.perform(get("/api/v1/order/" + uuid)
                         .accept(APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
@@ -72,17 +72,17 @@ class OrderResourceWebMvcTest {
         String orderUUID = UUID.randomUUID().toString();
         when(this.service.insert(customerUUID, orderDto)).thenReturn(orderUUID);
 
-        this.mockMvc.perform(post("/v1/order/" + customerUUID)
+        this.mockMvc.perform(post("/api/v1/order/" + customerUUID)
                         .contentType(APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(orderDto)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(LOCATION, "/v1/order/" + orderUUID));
+                .andExpect(header().string(LOCATION, "/api/v1/order/" + orderUUID));
     }
 
     @Test
     void deleteById() throws Exception {
         String uuid = UUID.randomUUID().toString();
-        this.mockMvc.perform(delete("/v1/order/" + uuid)
+        this.mockMvc.perform(delete("/api/v1/order/" + uuid)
                         .contentType(APPLICATION_JSON)
                         .content("{\"id\":" + uuid + "}"))
                 .andExpect(status().isNoContent());

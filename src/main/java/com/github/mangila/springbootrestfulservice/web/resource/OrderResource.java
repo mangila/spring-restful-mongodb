@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RequestMapping("v1/order")
+@RequestMapping("api/v1/order")
 @RestController
 @Tag(name = "Order", description = "endpoints for order operations.")
 public class OrderResource {

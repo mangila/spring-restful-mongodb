@@ -1,9 +1,9 @@
 package com.github.mangila.springbootrestfulservice.web.resource.webmvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mangila.springbootrestfulservice.service.CustomerService;
 import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.resource.CustomerResource;
-import com.github.mangila.springbootrestfulservice.service.CustomerService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,11 +36,10 @@ class CustomerResourceWebMvcTest {
     void findAll() throws Exception {
         when(this.service.findAll()).thenReturn(Lists.newArrayList(new CustomerDto()));
 
-        this.mockMvc.perform(get("/v1/customer").accept(APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/v1/customer").accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(1)));
-
     }
 
     @Test
@@ -48,7 +47,7 @@ class CustomerResourceWebMvcTest {
         String uuid = UUID.randomUUID().toString();
         when(this.service.findById(uuid)).thenReturn(new CustomerDto());
 
-        this.mockMvc.perform(get("/v1/customer/" + uuid)
+        this.mockMvc.perform(get("/api/v1/customer/" + uuid)
                         .accept(APPLICATION_JSON)
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -64,12 +63,12 @@ class CustomerResourceWebMvcTest {
         String uuid = UUID.randomUUID().toString();
         when(this.service.insert(customerDto)).thenReturn(uuid);
 
-        this.mockMvc.perform(post("/v1/customer")
+        this.mockMvc.perform(post("/api/v1/customer")
                         .contentType(APPLICATION_JSON)
                         .content(new ObjectMapper()
                                 .writeValueAsString(customerDto)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(LOCATION, "/v1/customer/" + uuid));
+                .andExpect(header().string(LOCATION, "/api/v1/customer/" + uuid));
     }
 
     @Test
@@ -79,22 +78,20 @@ class CustomerResourceWebMvcTest {
         String uuid = UUID.randomUUID().toString();
         when(this.service.update(uuid, customerDto)).thenReturn(uuid);
 
-        this.mockMvc.perform(put("/v1/customer/" + uuid)
+        this.mockMvc.perform(put("/api/v1/customer/" + uuid)
                         .contentType(APPLICATION_JSON)
                         .content(new ObjectMapper()
                                 .writeValueAsString(customerDto)))
                 .andExpect(status().isNoContent())
-                .andExpect(header().string(CONTENT_LOCATION, "/v1/customer/" + uuid));
+                .andExpect(header().string(CONTENT_LOCATION, "/api/v1/customer/" + uuid));
     }
 
     @Test
     void deleteById() throws Exception {
-
         String uuid = UUID.randomUUID().toString();
-        this.mockMvc.perform(delete("/v1/customer/" + uuid)
+        this.mockMvc.perform(delete("/api/v1/customer/" + uuid)
                         .contentType(APPLICATION_JSON)
                         .content("{\"id\":" + uuid + "}"))
                 .andExpect(status().isNoContent());
-
     }
 }

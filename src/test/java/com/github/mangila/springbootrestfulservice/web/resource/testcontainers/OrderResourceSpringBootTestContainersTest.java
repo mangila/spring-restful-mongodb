@@ -70,5 +70,4 @@ public class OrderResourceSpringBootTestContainersTest extends SeededMongoDBTest
         Assertions.assertEquals(11, this.orderService.findAll().size());
     }
 
-
 }

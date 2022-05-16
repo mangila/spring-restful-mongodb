@@ -48,7 +48,7 @@ public class DatabaseSeeder implements InitializingBean, DisposableBean {
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() {
         this.customerRepository.deleteAll();
         this.orderRepository.deleteAll();
     }

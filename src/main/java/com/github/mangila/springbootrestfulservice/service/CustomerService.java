@@ -1,40 +1,37 @@
 package com.github.mangila.springbootrestfulservice.service;
 
 
+import com.github.mangila.springbootrestfulservice.common.ApplicationException;
 import com.github.mangila.springbootrestfulservice.persistence.domain.CustomerDocument;
-import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
-import com.github.mangila.springbootrestfulservice.service.mapstruct.CustomerMapper;
 import com.github.mangila.springbootrestfulservice.persistence.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.*;
+import com.github.mangila.springbootrestfulservice.service.mapstruct.CustomerMapper;
+import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
+import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingResourceException;
 
 @Service
 @CacheConfig(cacheNames = {"customer"})
+@AllArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository repository;
     private final CustomerMapper mapper;
-
-    @Autowired
-    public CustomerService(CustomerRepository repository, CustomerMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     public List<CustomerDto> findAll() {
         return this.mapper.toDto(this.repository.findAll());
     }
 
     @Cacheable(key = "#id")
-    public CustomerDto findById(final String id) throws MissingResourceException {
+    public CustomerDto findById(final String id) {
         final CustomerDocument c = this.repository.findById(id).orElseThrow(() -> {
-            throw new MissingResourceException("Not Found", CustomerDto.class.getName(), id);
+            throw new ApplicationException(String.format("ID: %s - Not Found", id));
         });
         return this.mapper.toDto(c);
     }
@@ -47,12 +44,10 @@ public class CustomerService {
     }
 
     @CacheEvict(key = "#id")
-    public void deleteById(String id) throws MissingResourceException {
-        if (this.repository.existsById(id)) {
-            this.repository.deleteById(id);
-        } else {
-            throw new MissingResourceException("Not Found", CustomerDto.class.getName(), id);
-        }
+    public void deleteById(String id) {
+        this.repository.findById(id).ifPresentOrElse(repository::delete, () -> {
+            throw new ApplicationException(String.format("ID: %s - Not Found", id));
+        });
     }
 
 

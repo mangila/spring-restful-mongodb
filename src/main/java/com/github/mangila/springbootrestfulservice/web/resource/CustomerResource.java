@@ -19,7 +19,7 @@ import java.util.List;
 import static org.springframework.http.HttpHeaders.CONTENT_LOCATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RequestMapping("v1/customer")
+@RequestMapping("api/v1/customer")
 @RestController
 @Tag(name = "Customer", description = "endpoints for customer operations.")
 public class CustomerResource {

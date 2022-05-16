@@ -1,11 +1,13 @@
 package com.github.mangila.springbootrestfulservice.service;
 
 
+import com.github.mangila.springbootrestfulservice.common.ApplicationException;
 import com.github.mangila.springbootrestfulservice.persistence.domain.OrderDocument;
+import com.github.mangila.springbootrestfulservice.persistence.repository.OrderRepository;
+import com.github.mangila.springbootrestfulservice.service.mapstruct.OrderMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
-import com.github.mangila.springbootrestfulservice.service.mapstruct.OrderMapper;
-import com.github.mangila.springbootrestfulservice.persistence.repository.OrderRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +15,20 @@ import java.util.List;
 import java.util.MissingResourceException;
 
 @Service
+@AllArgsConstructor
 public class OrderService {
 
     private final OrderRepository repository;
     private final CustomerService customerService;
     private final OrderMapper mapper;
 
-    @Autowired
-    public OrderService(OrderRepository repository, CustomerService customerService, OrderMapper mapper) {
-        this.repository = repository;
-        this.customerService = customerService;
-        this.mapper = mapper;
-    }
-
     public List<OrderDto> findAll() {
         return this.mapper.toDto(this.repository.findAll());
     }
 
-    public OrderDto findById(String id) throws MissingResourceException {
+    public OrderDto findById(String id) {
         final OrderDocument c = this.repository.findById(id).orElseThrow(() -> {
-            throw new MissingResourceException("Not Found", OrderDto.class.getName(), id);
+            throw new ApplicationException(String.format("ID: %s - Not Found", id));
         });
         return this.mapper.toDto(c);
     }
@@ -50,7 +46,7 @@ public class OrderService {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);
         } else {
-            throw new MissingResourceException("Not Found", OrderDto.class.getName(), id);
+            throw new ApplicationException(String.format("ID: %s - Not Found", id));
         }
     }
 }

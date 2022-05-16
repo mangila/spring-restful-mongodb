@@ -52,7 +52,7 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("v1/customer")
+                .get("/api/v1/customer")
                 .then()
                 .status(HttpStatus.OK)
                 .extract().response();
@@ -72,7 +72,7 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("v1/customer/" + uuid)
+                .get("/api/v1/customer/" + uuid)
                 .then()
                 .status(HttpStatus.OK)
                 .body("id", equalTo(uuid))
@@ -91,10 +91,10 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .contentType(ContentType.JSON)
                 .body(c)
                 .when()
-                .post("v1/customer")
+                .post("/api/v1/customer")
                 .then()
                 .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, equalTo("/v1/customer/" + uuid));
+                .header(HttpHeaders.LOCATION, equalTo("/api/v1/customer/" + uuid));
     }
 
     @Test
@@ -109,10 +109,10 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .contentType(ContentType.JSON)
                 .body(c)
                 .when()
-                .put("v1/customer/" + uuid)
+                .put("/api/v1/customer/" + uuid)
                 .then()
                 .status(HttpStatus.NO_CONTENT)
-                .header(HttpHeaders.CONTENT_LOCATION, equalTo("/v1/customer/" + uuid));
+                .header(HttpHeaders.CONTENT_LOCATION, equalTo("/api/v1/customer/" + uuid));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class CustomerResourceRestAssuredMockMvcTest {
                 .contentType(ContentType.JSON)
                 .body(uuid)
                 .when()
-                .delete("v1/customer/" + uuid)
+                .delete("/api/v1/customer/" + uuid)
                 .then()
                 .status(HttpStatus.NO_CONTENT);
     }

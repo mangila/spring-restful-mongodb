@@ -1,5 +1,6 @@
 package com.github.mangila.springbootrestfulservice.web.exception;
 
+import com.github.mangila.springbootrestfulservice.common.ApplicationException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.MissingResourceException;
 
 @RestControllerAdvice
-public class GlobalRestControllerExceptionHandler {
+public class RestExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -33,15 +33,15 @@ public class GlobalRestControllerExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
-    @ExceptionHandler(MissingResourceException.class)
+    @ExceptionHandler(ApplicationException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ApiResponse(
             responseCode = "404",
             description = "The requested resource id was not found.")
-    public ResponseEntity<Map<String, String>> handleResourceMissing(RuntimeException ex) {
+    public ResponseEntity<Map<String, String>> handleApplicationException(ApplicationException ex) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        return new ResponseEntity<>(Map.of("id", ex.getMessage()), headers, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Map.of("message", ex.getMessage()), headers, HttpStatus.NOT_FOUND);
     }
 
 }

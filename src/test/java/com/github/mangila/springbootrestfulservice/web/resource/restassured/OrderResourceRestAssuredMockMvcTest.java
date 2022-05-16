@@ -53,7 +53,7 @@ public class OrderResourceRestAssuredMockMvcTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("v1/order")
+                .get("/api/v1/order")
                 .then()
                 .status(HttpStatus.OK)
                 .extract().response();
@@ -78,7 +78,7 @@ public class OrderResourceRestAssuredMockMvcTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(ContentType.JSON)
                 .when()
-                .get("v1/order/" + uuid)
+                .get("/api/v1/order/" + uuid)
                 .then()
                 .status(HttpStatus.OK)
                 .body("id", equalTo(uuid))
@@ -105,10 +105,10 @@ public class OrderResourceRestAssuredMockMvcTest {
                 .contentType(ContentType.JSON)
                 .body(o)
                 .when()
-                .post("v1/order/" + customerId)
+                .post("/api/v1/order/" + customerId)
                 .then()
                 .status(HttpStatus.CREATED)
-                .header(HttpHeaders.LOCATION, equalTo("/v1/order/" + orderId));
+                .header(HttpHeaders.LOCATION, equalTo("/api/v1/order/" + orderId));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class OrderResourceRestAssuredMockMvcTest {
                 .contentType(ContentType.JSON)
                 .body(uuid)
                 .when()
-                .delete("v1/order/" + uuid)
+                .delete("/api/v1/order/" + uuid)
                 .then()
                 .status(HttpStatus.NO_CONTENT);
     }
