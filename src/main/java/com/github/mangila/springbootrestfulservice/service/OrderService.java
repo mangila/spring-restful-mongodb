@@ -8,11 +8,9 @@ import com.github.mangila.springbootrestfulservice.service.mapstruct.OrderMapper
 import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.MissingResourceException;
 
 @Service
 @AllArgsConstructor
@@ -42,11 +40,9 @@ public class OrderService {
         return orderId;
     }
 
-    public void deleteById(String id) throws MissingResourceException {
-        if (this.repository.existsById(id)) {
-            this.repository.deleteById(id);
-        } else {
+    public void deleteById(String id) {
+        this.repository.findById(id).ifPresentOrElse(repository::delete, () -> {
             throw new ApplicationException(String.format("ID: %s - Not Found", id));
-        }
+        });
     }
 }
