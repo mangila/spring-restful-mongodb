@@ -10,7 +10,7 @@ This repo is focusing mainly on different REST test api frameworks and Spring te
 
 # OpenAPI docs
 
-* http://localhost:8080/api/swagger-ui.html
+* http://localhost:8080/swagger-ui.html
 
 # Environment stuffs
 

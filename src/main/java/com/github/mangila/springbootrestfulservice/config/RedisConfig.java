@@ -2,6 +2,7 @@ package com.github.mangila.springbootrestfulservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +17,10 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
+@AllArgsConstructor
 public class RedisConfig {
 
     private final ObjectMapper mapper;
-
-    public RedisConfig(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
 
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
