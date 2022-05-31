@@ -6,9 +6,9 @@ import com.github.mangila.springbootrestfulservice.persistence.domain.CustomerDo
 import com.github.mangila.springbootrestfulservice.persistence.domain.OrderDocument;
 import com.github.mangila.springbootrestfulservice.persistence.repository.CustomerRepository;
 import com.github.mangila.springbootrestfulservice.persistence.repository.OrderRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,7 @@ import java.util.List;
 
 @Component
 @Profile("dev")
+@AllArgsConstructor
 public class DatabaseSeeder implements InitializingBean, DisposableBean {
 
     private final CustomerRepository customerRepository;
@@ -25,13 +26,6 @@ public class DatabaseSeeder implements InitializingBean, DisposableBean {
     private final OrderRepository orderRepository;
 
     private final ObjectMapper mapper;
-
-    @Autowired
-    public DatabaseSeeder(CustomerRepository customerRepository, OrderRepository orderRepository, ObjectMapper mapper) {
-        this.customerRepository = customerRepository;
-        this.orderRepository = orderRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void afterPropertiesSet() throws IOException {

@@ -1,12 +1,12 @@
 package com.github.mangila.springbootrestfulservice.web.resource;
 
-import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import com.github.mangila.springbootrestfulservice.service.CustomerService;
+import com.github.mangila.springbootrestfulservice.web.dto.CustomerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +22,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("api/v1/customer")
 @RestController
 @Tag(name = "Customer", description = "endpoints for customer operations.")
+@AllArgsConstructor
 public class CustomerResource {
 
     private final CustomerService service;
-
-    @Autowired
-    public CustomerResource(CustomerService service) {
-        this.service = service;
-    }
 
     @Operation(description = "Find all customers.")
     @ApiResponse(responseCode = "200",

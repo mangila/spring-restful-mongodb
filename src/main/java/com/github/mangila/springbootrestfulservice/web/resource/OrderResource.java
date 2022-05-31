@@ -1,11 +1,12 @@
 package com.github.mangila.springbootrestfulservice.web.resource;
 
-import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
 import com.github.mangila.springbootrestfulservice.service.OrderService;
+import com.github.mangila.springbootrestfulservice.web.dto.OrderDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("api/v1/order")
 @RestController
 @Tag(name = "Order", description = "endpoints for order operations.")
+@AllArgsConstructor
 public class OrderResource {
 
     private final OrderService service;
-
-    public OrderResource(OrderService service) {
-        this.service = service;
-    }
 
     @Operation(description = "Find all orders.")
     @ApiResponse(responseCode = "200",
